@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ku-bd">
+<head>
+    <meta charset="UTF-8">
+    <title>بەخێربێن بۆ ALPHA7.AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Noto Sans Arabic', sans-serif;
+        }
+        .entrance-container {
+            background: rgba(34, 40, 49, 0.92);
+            border-radius: 32px;
+            box-shadow: 0 12px 48px #ff660044, 0 2px 8px #0003;
+            padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+            max-width: 420px;
+            text-align: center;
+            margin-top: 2rem;
+            animation: fadeIn 1.2s;
+        }
+        .entrance-logo {
+            font-size: 3.2rem;
+            font-weight: bold;
+            color: #ff6600;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+            text-shadow: 0 2px 16px #ff660055;
+        }
+        .entrance-title {
+            font-size: 2.1rem;
+            color: #fff;
+            margin-bottom: 1.2rem;
+            font-weight: bold;
+        }
+        .entrance-desc {
+            color: #b3b3b3;
+            font-size: 1.1rem;
+            margin-bottom: 2.2rem;
+        }
+        .entrance-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(90deg, #ff6600, #ff8533 80%);
+            color: #fff;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 2px 12px #ff660022;
+            border: none;
+            transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.2s;
+            margin-top: 1.2rem;
+        }
+        .entrance-btn:hover {
+            background: #fff;
+            color: #ff6600;
+            box-shadow: 0 4px 24px #ff660044;
+            transform: scale(1.04);
+        }
+        .entrance-footer {
+            margin-top: 2.5rem;
+            color: #b3b3b3;
+            font-size: 0.95rem;
+        }
+        .detail-btn {
+            display: inline-block;
+            margin-top: 0.7rem;
+            padding: 0.4rem 1.2rem;
+            background: #ff6600;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .detail-btn:hover {
+            background: #ff8533;
+        }
+        .detail-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(24,28,36,0.92);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+        }
+        .detail-modal.active {
+            display: flex;
+        }
+        .detail-content {
+            background: var(--bg-glass);
+            border-radius: 18px;
+            padding: 2.2rem 2.5rem;
+            color: #fff;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 8px 32px #ff660022;
+        }
+        .detail-close {
+            margin-top: 1.2rem;
+            background: #ff6600;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .detail-close:hover {
+            background: #ff8533;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="entrance-container">
+        <div class="entrance-logo">ALPHA7.AI</div>
+        <div class="entrance-title">بەخێربێن بۆ مالپەری ئامێرێن زێرەکی</div>
+        <div class="entrance-desc">
+            ئەم مالپەرە هەموو جۆرێک ئامێر و مالپەر و یارمەتیدەرێن زێرەکی بۆ هەموو بابەتێک پێشکەش دکات.<br>
+            <span style="color:#ff6600;font-weight:bold;">کوردی بادینی</span>، دیزاینی نوێ و تایبەتمەندیێن زۆر.
+        </div>
+        <a class="entrance-btn" href="index.html">دەستپێ بکە</a>
+        <button class="detail-btn" onclick="showDetail('entrance')">زانیاری زیاتر</button>
+    </div>
+    <div class="entrance-footer">
+        &copy; 2025 ALPHA7.AI - هەموو ماف پارێزراون.
+    </div>
+    <div class="detail-modal" id="entranceDetail">
+        <div class="detail-content">
+            <h2>دەربارەی مالپەر</h2>
+            <p>ئەم مالپەرە بۆ یارمەتیدانی خەڵکێ بە ئامێر و مالپەرێن زێرەکی و نوێ دروست بووە. هەموو شتێک بە زمانی کوردی بادینیە و دیزاینی نوێیەکی خۆش هەیە.</p>
+            <button class="detail-close" onclick="closeDetail('entrance')">داخستن</button>
+        </div>
+    </div>
+    <script>
+    function showDetail(id) {
+        document.getElementById(id+'Detail').classList.add('active');
+    }
+    function closeDetail(id) {
+        document.getElementById(id+'Detail').classList.remove('active');
+    }
+    </script>
+</body>
+</html>
