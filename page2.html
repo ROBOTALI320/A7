@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ku-bd">
+<head>
+    <meta charset="UTF-8">
+    <title>ALPHA7.AI - پەڕەی دووەم</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="پەڕەی دووەم بۆ کتێگۆری و ئامێرێن هۆشمەندی">
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Use the same style as index.html for consistency */
+        :root {
+            --accent: #ff6600;
+            --accent-hover: #ff8533;
+            --bg-main: #181c24;
+            --bg-glass: rgba(34, 40, 49, 0.85);
+            --bg-glass-light: rgba(34, 40, 49, 0.45);
+            --text-main: #fff;
+            --text-secondary: #b3b3b3;
+            --border: #404040;
+            --shadow: 0 8px 32px rgba(255, 102, 0, 0.18);
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background: linear-gradient(120deg, #232526 0%, #414345 100%);
+            color: var(--text-main);
+            direction: rtl;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        nav {
+            position: fixed;
+            top: 0; right: 0; left: 0;
+            z-index: 1000;
+            background: var(--bg-glass);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.2rem 2.5rem;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+            border-bottom: 2px solid var(--accent);
+            backdrop-filter: blur(12px);
+        }
+        .logo {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px #ff660055;
+        }
+        .nav-links a {
+            color: var(--accent);
+            margin-left: 1.5rem;
+            font-size: 1.1rem;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #fff;
+        }
+        main {
+            padding: 7.5rem 0 2rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .categories-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+        .category-card {
+            background: var(--bg-glass);
+            border-radius: 24px;
+            border: 2.5px solid var(--accent);
+            box-shadow: 0 8px 32px #ff660022, 0 2px 8px #0002;
+            width: 320px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            font-size: 1.4rem;
+            color: var(--accent);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+        }
+        .category-card:hover {
+            transform: scale(1.06) translateY(-8px);
+            box-shadow: 0 16px 48px #ff660044, 0 2px 8px #0003;
+            border-color: #fff;
+            background: var(--bg-glass-light);
+        }
+        .category-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(24,28,36,0.98);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 0 0 2rem 0;
+            animation: fadeIn 0.5s;
+        }
+        .category-overlay.active {
+            display: block;
+        }
+        .overlay-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2.5rem 3rem 1.5rem 3rem;
+        }
+        .overlay-title {
+            font-size: 2.1rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        .overlay-close {
+            font-size: 2.2rem;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .overlay-close:hover {
+            color: var(--accent);
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2rem;
+            padding: 0 2.5rem;
+        }
+        .tool-card {
+            background: var(--bg-glass);
+            border-radius: 20px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 8px 32px #ff660022, 0 2px 8px #0002;
+            padding: 2.2rem 1.2rem 1.5rem 1.2rem;
+            text-align: center;
+            color: var(--text-main);
+            position: relative;
+            transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+        }
+        .tool-card:hover {
+            border-color: #fff;
+            box-shadow: 0 16px 48px #ff660044, 0 2px 8px #0003;
+            transform: scale(1.05) translateY(-8px);
+        }
+        .tool-content h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .tool-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.1rem;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        .tool-content a {
+            display: inline-block;
+            padding: 0.7rem 1.3rem;
+            background: linear-gradient(90deg, var(--accent), #ff4d00 80%);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+            box-shadow: 0 2px 8px #ff660022;
+            border: none;
+        }
+        .tool-content a:hover {
+            background: #fff;
+            color: var(--accent);
+            box-shadow: 0 4px 16px #ff660044;
+        }
+        @media (max-width: 900px) {
+            .categories-list { gap: 1.2rem; }
+            .category-card { width: 95vw; min-width: 0; }
+            .tools-grid { grid-template-columns: 1fr 1fr; padding: 0 1rem; }
+        }
+        @media (max-width: 600px) {
+            .categories-list { gap: 0.7rem; }
+            .category-card { width: 100vw; margin: 0.7rem 0; }
+            .tools-grid { grid-template-columns: 1fr; padding: 0 0.5rem; }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">ALPHA7.AI</div>
+        <div class="nav-links">
+            <a href="index.html">ماڵەوە</a>
+            <a href="page2.html">پەڕەی دووەم</a>
+        </div>
+    </nav>
+    <main>
+        <div class="categories-list" id="categoriesList"></div>
+    </main>
+    <div id="overlaysContainer"></div>
+    <footer>
+        <div class="social-links">
+            <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p style="color: var(--text-secondary); margin-top: 1rem;">© 2025 ALPHA7.AI -.</p>
+    </footer>
+    <script>
+    // New categories and tools for the second page
+    const categories = [
+        {
+            title: '🧠 فێربوون و خوێندن',
+            tools: [
+                { name: 'Khan Academy', desc: 'فێربوونا بێبەرامبەر بۆ هەموو قۆناغێن خوێندن', url: 'https://www.khanacademy.org' },
+                { name: 'Coursera', desc: 'کۆرسێن فێربوون و زانکۆیی', url: 'https://www.coursera.org' },
+                { name: 'edX', desc: 'کۆرسێن زانکۆیی و فێربوون', url: 'https://www.edx.org' },
+                { name: 'Udemy', desc: 'کۆرسێن فێربوون بۆ هەموو کەس', url: 'https://www.udemy.com' },
+                { name: 'Duolingo', desc: 'فێربوونا زمانێن نوێ', url: 'https://www.duolingo.com' },
+                { name: 'Brilliant', desc: 'فێربوونا بیرکاری و زانست', url: 'https://www.brilliant.org' },
+                { name: 'FutureLearn', desc: 'کۆرسێن فێربوون و زانکۆیی', url: 'https://www.futurelearn.com' },
+                { name: 'Skillshare', desc: 'فێربوونا هونەر و کار', url: 'https://www.skillshare.com' },
+                { name: 'Memrise', desc: 'فێربوونا زمان و بیرکردنەوە', url: 'https://www.memrise.com' },
+                { name: 'OpenAI Learn', desc: 'فێربوونا هۆشمەندی و AI', url: 'https://learn.openai.com' },
+            ]
+        },
+        {
+            title: '📊 ڕاگەهاندن و زانیاری',
+            tools: [
+                { name: 'Google News', desc: 'نووسین و هەواڵێن نوێ', url: 'https://news.google.com' },
+                { name: 'BBC News', desc: 'هەواڵ و زانیاری', url: 'https://www.bbc.com/news' },
+                { name: 'Reuters', desc: 'هەواڵ و زانیاری', url: 'https://www.reuters.com' },
+                { name: 'Medium', desc: 'نووسین و بلاگێن بەرز', url: 'https://medium.com' },
+                { name: 'Quora', desc: 'پرسیار و وەڵام', url: 'https://www.quora.com' },
+                { name: 'Stack Overflow', desc: 'پرسیار و وەڵام بۆ کۆدکردن', url: 'https://stackoverflow.com' },
+                { name: 'Reddit', desc: 'کۆمەڵگە و زانیاری', url: 'https://www.reddit.com' },
+                { name: 'Wikipedia', desc: 'زانکۆپەدیا و زانیاری', url: 'https://www.wikipedia.org' },
+                { name: 'WolframAlpha', desc: 'زانست و بیرکاری', url: 'https://www.wolframalpha.com' },
+                { name: 'Internet Archive', desc: 'ئەرشیڤی ئینتەرنێت', url: 'https://archive.org' },
+            ]
+        },
+        {
+            title: '🎨 هونەر و دیزاین',
+            tools: [
+                { name: 'Canva', desc: 'دیزاینی وێنە و پۆستەر', url: 'https://www.canva.com' },
+                { name: 'Figma', desc: 'دیزاینی وێب و ئاپلیکەیشن', url: 'https://www.figma.com' },
+                { name: 'Adobe Photoshop', desc: 'دیزاینی و ڕێکخستنی وێنە', url: 'https://www.adobe.com/products/photoshop.html' },
+                { name: 'Pixlr', desc: 'ڕێکخستنی وێنە بۆ فڕۆکەیەکی نوێ', url: 'https://www.pixlr.com' },
+                { name: 'Krita', desc: 'دروستکردنی وێنە و هونەر', url: 'https://krita.org' },
+                { name: 'Behance', desc: 'پڕۆژە و هونەری دیزاین', url: 'https://www.behance.net' },
+                { name: 'Dribbble', desc: 'پڕۆژە و هونەری دیزاین', url: 'https://dribbble.com' },
+                { name: 'Vectr', desc: 'دیزاینی وێنەی ڤێکتۆر', url: 'https://vectr.com' },
+                { name: 'Photopea', desc: 'ڕێکخستنی وێنە بۆ فڕۆکەیەکی نوێ', url: 'https://www.photopea.com' },
+                { name: 'Crello', desc: 'دیزاینی وێنە و پۆستەر', url: 'https://crello.com' },
+            ]
+        },
+        {
+            title: '💼 کار و بازاڕ',
+            tools: [
+                { name: 'LinkedIn', desc: 'پلاتفۆرمی کار و بازاڕ', url: 'https://www.linkedin.com' },
+                { name: 'Glassdoor', desc: 'دۆزینەوەی کار و هەڵسەنگاندن', url: 'https://www.glassdoor.com' },
+                { name: 'Indeed', desc: 'گەڕان بۆ کار', url: 'https://www.indeed.com' },
+                { name: 'Monster', desc: 'گەڕان بۆ کار', url: 'https://www.monster.com' },
+                { name: 'Upwork', desc: 'کارکردن بە فریلانس', url: 'https://www.upwork.com' },
+                { name: 'Fiverr', desc: 'بازاڕی فریلانس', url: 'https://www.fiverr.com' },
+                { name: 'Remote OK', desc: 'کارەکان بە دوور', url: 'https://remoteok.com' },
+                { name: 'AngelList', desc: 'کار و ستارتاپ', url: 'https://angel.co' },
+                { name: 'FlexJobs', desc: 'کارەکانی فلیکسی', url: 'https://www.flexjobs.com' },
+                { name: 'SimplyHired', desc: 'گەڕان بۆ کار', url: 'https://www.simplyhired.com' },
+            ]
+        },
+        {
+            title: '🛒 بازاڕ و کڕین',
+            tools: [
+                { name: 'Amazon', desc: 'بازاڕی گشتی', url: 'https://www.amazon.com' },
+                { name: 'eBay', desc: 'بازاڕی گشتی', url: 'https://www.ebay.com' },
+                { name: 'AliExpress', desc: 'بازاڕی گشتی', url: 'https://www.aliexpress.com' },
+                { name: 'Etsy', desc: 'بازاڕی کارە دستی', url: 'https://www.etsy.com' },
+                { name: 'Walmart', desc: 'بازاڕی گشتی', url: 'https://www.walmart.com' },
+                { name: 'Best Buy', desc: 'بازاڕی ئامێر و تیکنەلۆجی', url: 'https://www.bestbuy.com' },
+                { name: 'Target', desc: 'بازاڕی گشتی', url: 'https://www.target.com' },
+                { name: 'Shopify', desc: 'دروستکردنی بازاڕی تایبەتی', url: 'https://www.shopify.com' },
+                { name: 'Rakuten', desc: 'بازاڕی گشتی', url: 'https://www.rakuten.com' },
+                { name: 'Mercado Libre', desc: 'بازاڕی گشتی', url: 'https://www.mercadolibre.com' },
+            ]
+        },
+        {
+            title: '📱 ئاپلیکەیشن و مۆبایل',
+            tools: [
+                { name: 'Google Play', desc: 'بازاڕی ئاپلیکەیشنەکان', url: 'https://play.google.com' },
+                { name: 'App Store', desc: 'بازاڕی ئاپلیکەیشنەکان', url: 'https://www.apple.com/app-store/' },
+                { name: 'APKMirror', desc: 'داگرتنی APK', url: 'https://www.apkmirror.com' },
+                { name: 'Aptoide', desc: 'بازاڕی ئاپلیکەیشنەکان', url: 'https://en.aptoide.com' },
+                { name: 'F-Droid', desc: 'بازاڕی ئاپلیکەیشنەکانی کۆد کراوە', url: 'https://f-droid.org' },
+                { name: 'Uptodown', desc: 'داگرتنی ئاپلیکەیشن', url: 'https://www.uptodown.com' },
+                { name: 'GetJar', desc: 'بازاڕی ئاپلیکەیشنەکان', url: 'https://www.getjar.com' },
+                { name: 'AppBrain', desc: 'بازاڕی ئاپلیکەیشنەکان', url: 'https://www.appbrain.com' },
+                { name: 'SlideME', desc: 'بازاڕی ئاپلیکەیشنەکان', url: 'https://slideme.org' },
+                { name: 'Mobogenie', desc: 'بازاڕی ئاپلیکەیشنەکان', url: 'https://www.mobogenie.com' },
+            ]
+        },
+        {
+            title: '🌍 گەشت و گەشتکردن',
+            tools: [
+                { name: 'Google Maps', desc: 'نیشاندانی ڕێ و شوێن', url: 'https://maps.google.com' },
+                { name: 'Booking.com', desc: 'فەرمی هۆتێل و گەشت', url: 'https://www.booking.com' },
+                { name: 'Airbnb', desc: 'کرێی ماڵ و شوێن', url: 'https://www.airbnb.com' },
+                { name: 'TripAdvisor', desc: 'ڕاهێنان و پێشنیار', url: 'https://www.tripadvisor.com' },
+                { name: 'Skyscanner', desc: 'گەڕان بۆ فڕۆکە', url: 'https://www.skyscanner.net' },
+                { name: 'Expedia', desc: 'فەرمی گەشت و هۆتێل', url: 'https://www.expedia.com' },
+                { name: 'Kayak', desc: 'گەڕان بۆ فڕۆکە و هۆتێل', url: 'https://www.kayak.com' },
+                { name: 'Agoda', desc: 'فەرمی هۆتێل', url: 'https://www.agoda.com' },
+                { name: 'Lonely Planet', desc: 'ڕێبەر بۆ گەشت', url: 'https://www.lonelyplanet.com' },
+                { name: 'Rome2Rio', desc: 'ڕێ و گەشت', url: 'https://www.rome2rio.com' },
+            ]
+        },
+    ];
+    // Render category cards
+    const categoriesList = document.getElementById('categoriesList');
+    const overlaysContainer = document.getElementById('overlaysContainer');
+    categories.forEach((cat, idx) => {
+        // Category card
+        const card = document.createElement('div');
+        card.className = 'category-card';
+        card.innerHTML = `<span>${cat.title}</span>`;
+        card.onclick = () => openOverlay(idx);
+        categoriesList.appendChild(card);
+        // Overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'category-overlay';
+        overlay.id = `overlay-${idx}`;
+        overlay.innerHTML = `
+            <div class="overlay-header">
+                <span class="overlay-title">${cat.title}</span>
+                <button class="overlay-close" onclick="closeOverlay(${idx})"><i class='fas fa-times'></i></button>
+            </div>
+            <div class="tools-grid">
+                ${cat.tools.map(tool => tool.name ? `
+                <div class="tool-card">
+                    <div class="tool-content">
+                        <h3>${tool.name}</h3>
+                        <p>${tool.desc || ''}</p>
+                        ${tool.url ? `<a href="${tool.url}" target="_blank">سەرەدان</a>` : ''}
+                    </div>
+                </div>` : '').join('')}
+            </div>
+        `;
+        overlaysContainer.appendChild(overlay);
+    });
+    // Overlay logic
+    function openOverlay(idx) {
+        document.querySelectorAll('.category-overlay').forEach(o => o.classList.remove('active'));
+        document.getElementById(`overlay-${idx}`).classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeOverlay(idx) {
+        document.getElementById(`overlay-${idx}`).classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    overlaysContainer.addEventListener('click', function(e) {
+        if (e.target.classList.contains('category-overlay')) {
+            document.querySelectorAll('.category-overlay').forEach(o => o.classList.remove('active'));
+            document.body.style.overflow = '';
+        }
+    });
+    </script>
+</body>
+</html>
