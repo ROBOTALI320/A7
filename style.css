@@ -1,0 +1,26 @@
+/* styles.css - Basic styles for your website */
+
+body {
+  background-color: #121212;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  color: #00bcd4;
+}
+
+a {
+  color: #ff5722;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  max-width: 600px;
+}
