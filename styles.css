@@ -1,25 +1,27 @@
-/* ALPHA7.AI - Modern Dark Glassmorphic Kurdish AI Tools CSS */
+/* Modern, beautiful, glassmorphic, and animated improvements for ALPHA7.AI */
 :root {
     --accent: #ff6600;
     --accent-hover: #ff8533;
     --bg-main: #181c24;
-    --bg-glass: rgba(34, 40, 49, 0.85);
-    --bg-glass-light: rgba(34, 40, 49, 0.45);
+    --bg-glass: rgba(34, 40, 49, 0.92);
+    --bg-glass-light: rgba(34, 40, 49, 0.55);
     --text-main: #fff;
     --text-secondary: #b3b3b3;
     --border: #404040;
-    --shadow: 0 8px 32px rgba(255, 102, 0, 0.18);
+    --shadow: 0 12px 48px #ff660044, 0 2px 8px #0003;
+    --gradient: linear-gradient(120deg, #232526 0%, #414345 100%);
 }
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans Arabic', sans-serif;
-    background: linear-gradient(120deg, #232526 0%, #414345 100%);
+    background: var(--gradient);
     color: var(--text-main);
     direction: rtl;
     min-height: 100vh;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 nav {
     position: fixed;
@@ -32,25 +34,32 @@ nav {
     padding: 1.2rem 2.5rem;
     box-shadow: 0 2px 16px rgba(0,0,0,0.18);
     border-bottom: 2px solid var(--accent);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    animation: navFadeIn 1.2s;
 }
+@keyframes navFadeIn { from { opacity: 0; top: -40px; } to { opacity: 1; top: 0; } }
 .logo {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     font-weight: bold;
     color: var(--accent);
     letter-spacing: 2px;
-    text-shadow: 0 2px 8px #ff660055;
+    text-shadow: 0 2px 16px #ff660055;
+    animation: logoPop 1.2s;
 }
+@keyframes logoPop { from { opacity: 0; transform: scale(0.8);} to { opacity: 1; transform: scale(1);} }
 .nav-links a {
     color: var(--accent);
     margin-left: 1.5rem;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     text-decoration: none;
     font-weight: 700;
-    transition: color 0.2s;
+    transition: color 0.2s, border-bottom 0.2s;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
 }
 .nav-links a:hover {
     color: #fff;
+    border-bottom: 2px solid #fff;
 }
 .search-container {
     width: 260px;
@@ -59,7 +68,7 @@ nav {
 .search-container input {
     width: 100%;
     padding: 0.7rem 1.1rem;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1.5px solid var(--accent);
     background: var(--bg-glass-light);
     color: var(--text-main);
@@ -72,44 +81,52 @@ nav {
 }
 .theme-toggle {
     cursor: pointer;
-    font-size: 1.7rem;
+    font-size: 1.9rem;
     color: var(--accent);
     margin-right: 1.2rem;
+    transition: color 0.2s, transform 0.2s;
+}
+.theme-toggle:hover {
+    color: #fff;
+    transform: rotate(-15deg) scale(1.1);
 }
 main {
-    padding: 7.5rem 0 2rem 0;
-    max-width: 1400px;
+    padding: 8.5rem 0 2.5rem 0;
+    max-width: 1500px;
     margin: 0 auto;
+    animation: fadeIn 1.2s;
 }
 .categories-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2.5rem;
+    gap: 2.8rem;
 }
 .category-card {
     background: var(--bg-glass);
-    border-radius: 24px;
+    border-radius: 28px;
     border: 2.5px solid var(--accent);
-    box-shadow: 0 8px 32px #ff660022, 0 2px 8px #0002;
-    width: 320px;
-    min-height: 120px;
+    box-shadow: var(--shadow);
+    width: 340px;
+    min-height: 130px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-    font-size: 1.4rem;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background 0.3s;
+    font-size: 1.5rem;
     color: var(--accent);
     font-weight: bold;
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
+    animation: cardPop 1.1s;
 }
+@keyframes cardPop { from { opacity: 0; transform: scale(0.9);} to { opacity: 1; transform: scale(1);} }
 .category-card:hover {
-    transform: scale(1.06) translateY(-8px);
-    box-shadow: 0 16px 48px #ff660044, 0 2px 8px #0003;
+    transform: scale(1.08) translateY(-10px) rotate(-1deg);
+    box-shadow: 0 20px 60px #ff660055, 0 2px 8px #0003;
     border-color: #fff;
     background: var(--bg-glass-light);
 }
@@ -133,12 +150,12 @@ main {
     padding: 2.5rem 3rem 1.5rem 3rem;
 }
 .overlay-title {
-    font-size: 2.1rem;
+    font-size: 2.2rem;
     color: var(--accent);
     font-weight: bold;
 }
 .overlay-close {
-    font-size: 2.2rem;
+    font-size: 2.3rem;
     color: #fff;
     background: none;
     border: none;
@@ -151,27 +168,29 @@ main {
 .tools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    gap: 2rem;
+    gap: 2.2rem;
     padding: 0 2.5rem;
 }
 .tool-card {
     background: var(--bg-glass);
-    border-radius: 20px;
+    border-radius: 22px;
     border: 2px solid var(--accent);
     box-shadow: 0 8px 32px #ff660022, 0 2px 8px #0002;
     padding: 2.2rem 1.2rem 1.5rem 1.2rem;
     text-align: center;
     color: var(--text-main);
     position: relative;
-    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background 0.25s;
+    animation: fadeIn 1.1s;
 }
 .tool-card:hover {
     border-color: #fff;
     box-shadow: 0 16px 48px #ff660044, 0 2px 8px #0003;
-    transform: scale(1.05) translateY(-8px);
+    transform: scale(1.07) translateY(-8px);
+    background: var(--bg-glass-light);
 }
 .tool-content h3 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     margin-bottom: 0.5rem;
     color: #fff;
     font-weight: bold;
@@ -181,16 +200,16 @@ main {
     color: var(--text-secondary);
     margin-bottom: 1.1rem;
     line-height: 1.6;
-    font-size: 1rem;
+    font-size: 1.05rem;
 }
 .tool-content a {
     display: inline-block;
     padding: 0.7rem 1.3rem;
     background: linear-gradient(90deg, var(--accent), #ff4d00 80%);
     color: #fff;
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.05rem;
     text-decoration: none;
     transition: background 0.2s, box-shadow 0.2s, color 0.2s;
     box-shadow: 0 2px 8px #ff660022;
@@ -201,14 +220,23 @@ main {
     color: var(--accent);
     box-shadow: 0 4px 16px #ff660044;
 }
-@media (max-width: 900px) {
-    .categories-list { gap: 1.2rem; }
-    .category-card { width: 95vw; min-width: 0; }
+footer {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-top: 2.5rem;
+    padding-bottom: 1.5rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+@media (max-width: 1100px) {
+    .categories-list { gap: 1.5rem; }
+    .category-card { width: 98vw; min-width: 0; }
     .tools-grid { grid-template-columns: 1fr 1fr; padding: 0 1rem; }
 }
-@media (max-width: 600px) {
-    .categories-list { gap: 0.7rem; }
+@media (max-width: 700px) {
+    .categories-list { gap: 0.8rem; }
     .category-card { width: 100vw; margin: 0.7rem 0; }
     .tools-grid { grid-template-columns: 1fr; padding: 0 0.5rem; }
+    nav { padding: 0.7rem 0.7rem; }
+    .logo { font-size: 1.5rem; }
 }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
