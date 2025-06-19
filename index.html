@@ -14,20 +14,21 @@
         :root {
             --accent: #ff6600;
             --accent-hover: #ff8533;
-            --bg-main: #181c24;
-            --bg-glass: rgba(34, 40, 49, 0.85);
-            --bg-glass-light: rgba(34, 40, 49, 0.45);
+            --bg-main: #0a0a0d;
+            --bg-glass: rgba(10, 10, 13, 0.92);
+            --bg-glass-light: rgba(10, 10, 13, 0.55);
             --text-main: #fff;
-            --text-secondary: #b3b3b3;
-            --border: #404040;
-            --shadow: 0 8px 32px rgba(255, 102, 0, 0.18);
+            --text-secondary: #ffb380;
+            --border: #222;
+            --shadow: 0 12px 48px #ff660044, 0 2px 8px #0003;
+            --gradient: linear-gradient(120deg, #0a0a0d 0%, #181818 100%);
         }
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
             font-family: 'Noto Sans Arabic', sans-serif;
-            background: linear-gradient(120deg, #232526 0%, #414345 100%);
+            background: var(--gradient);
             color: var(--text-main);
             direction: rtl;
             min-height: 100vh;
@@ -105,7 +106,7 @@
             background: var(--bg-glass);
             border-radius: 24px;
             border: 2.5px solid var(--accent);
-            box-shadow: 0 8px 32px #ff660022, 0 2px 8px #0002;
+            box-shadow: 0 8px 32px #ff660022, 0 2px 8px #0005;
             width: 320px;
             min-height: 120px;
             display: flex;
@@ -173,7 +174,7 @@
             background: var(--bg-glass);
             border-radius: 20px;
             border: 2px solid var(--accent);
-            box-shadow: 0 8px 32px #ff660022, 0 2px 8px #0002;
+            box-shadow: 0 8px 32px #ff660022, 0 2px 8px #0005;
             padding: 2.2rem 1.2rem 1.5rem 1.2rem;
             text-align: center;
             color: var(--text-main);
@@ -216,46 +217,57 @@
             color: var(--accent);
             box-shadow: 0 4px 16px #ff660044;
         }
-        /* Scroll-to-top button */
-        #scrollTopBtn {
-            display: none;
-            position: fixed;
-            bottom: 32px;
-            left: 32px;
-            z-index: 3000;
+        .more-detail-btn {
+            display: inline-block;
+            margin-top: 0.5rem;
+            margin-right: 0.5rem;
+            padding: 0.5rem 1.2rem;
             background: var(--accent);
             color: #fff;
             border: none;
-            border-radius: 50%;
-            width: 54px;
-            height: 54px;
-            font-size: 2rem;
-            box-shadow: 0 4px 16px #ff660044;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s, box-shadow 0.2s;
+            transition: background 0.2s;
         }
-        #scrollTopBtn:hover {
-            background: #fff;
-            color: var(--accent);
-            box-shadow: 0 8px 32px #ff660066;
+        .more-detail-btn:hover {
+            background: var(--accent-hover);
+            color: #fff;
         }
-        /* Loading spinner */
-        #loadingSpinner {
+        .detail-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(24,28,36,0.85);
-            z-index: 4000;
+            background: rgba(24,28,36,0.92);
+            z-index: 3000;
             align-items: center;
             justify-content: center;
         }
-        #loadingSpinner .spinner {
-            border: 8px solid #232a34;
-            border-top: 8px solid var(--accent);
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            animation: spin 1.2s linear infinite;
+        .detail-modal.active {
+            display: flex;
+        }
+        .detail-content {
+            background: var(--bg-glass);
+            border-radius: 18px;
+            padding: 2.2rem 2.5rem;
+            color: #fff;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 8px 32px #ff660022;
+        }
+        .detail-close {
+            margin-top: 1.2rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .detail-close:hover {
+            background: var(--accent-hover);
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -348,27 +360,28 @@
     <div id="entranceOverlay" style="position:fixed;z-index:5000;top:0;left:0;width:100vw;height:100vh;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div class="entrance-container">
             <div class="entrance-logo">A7</div>
-            <div class="entrance-title">بخێر هاتی</div>
+            <div class="entrance-title">بەخێربێت بۆ ALPHA7.AI</div>
             <div class="entrance-desc>
                  <br>
-                <span style="color:#ff6600;font-weight:bold;"> </span>
+                <span style="color:#ff6600;font-weight:bold;"></span>
             </div>
-            <a class="entrance-btn" href="#" onclick="hideEntrance(event)">چوونە ژوور</a>
+            <a class="entrance-btn" href="#" onclick="hideEntrance(event)">ENTER  </a>
         </div>
-        <div class="entrance-footer" style="color:#b3b3b3;margin-top:2.5rem;font-size:0.95rem;">&copy; 2025 A7</div>
+        <div class="entrance-footer" style="color:#b3b3b3;margin-top:2.5rem;font-size:0.95rem;">&copy; 2025 - A7</div>
     </div>
     <nav>
         <div class="logo">ALPHA7.AI</div>
         <div class="nav-links">
-            <a href="index.html">سەرەتا</a>
+            <a href="index.html">سەرەتایێ</a>
             <a href="newpage.html">ئامێرێن AI</a>
         </div>
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="گەڕان...">
+            <input type="text" id="searchInput" placeholder="گەڕان... (ناڤ یان جۆر بنڤیسە)">
         </div>
         <div class="theme-toggle" id="themeToggle">
             <i class="fas fa-moon"></i>
         </div>
+        <button id="showFavoritesBtn" style="background:var(--accent);color:#fff;border:none;border-radius:8px;padding:0.5rem 1.2rem;font-weight:bold;cursor:pointer;margin-right:1rem;">تەنها دڵخوازەکان</button>
     </nav>
     <main>
         <div class="categories-list" id="categoriesList">
@@ -391,6 +404,15 @@
         </div>
         <p style="color: var(--text-secondary); margin-top: 1rem;">© 2025 ALPHA7.AI -.</p>
     </footer>
+    <div id="detailModal" class="detail-modal">
+  <div class="detail-content">
+    <h3 id="detailTitle"></h3>
+    <p id="detailDesc"></p>
+    <div id="detailInfo" style="color:var(--text-secondary);margin-bottom:1rem;"></div>
+    <a id="detailUrl" href="#" target="_blank" style="display:none; color:var(--accent);font-weight:bold;">سەرەدان</a>
+    <button class="detail-close" onclick="closeDetailModal()">داخستن</button>
+  </div>
+</div>
     <script>
     function hideEntrance(e) {
         e.preventDefault();
@@ -399,50 +421,50 @@
     // --- DATA: All categories and tools (preserved, add your full data here) ---
     const categories = [
         {
-            title: '🤖 چاتبۆتێن هۆشمەند',
+            title: '🤖 چاتبووتێن زیرەک',
             tools: [
-                { name: 'ChatGPT', desc: 'باشترین چاتبۆتا هۆشمەند یا OpenAI', url: 'https://chat.openai.com' },
-                { name: 'Google Bard', desc: 'چاتبۆتا نوی یا گووگڵی', url: 'https://bard.google.com' },
-                { name: 'Microsoft Copilot', desc: 'چاتبۆتا هۆشمەند یا مایکروسۆفت', url: 'https://www.microsoft.com/copilot' },
-                { name: 'ChatSonic', desc: 'چاتبۆتی هۆشمەند بۆ فڕۆکەیەکی نوێ', url: 'https://writesonic.com/chat' },
-                { name: 'Jasper', desc: 'چاتبۆتی نووسین بۆ مارکێتینگ', url: 'https://www.jasper.ai' },
-                { name: 'Copy.ai', desc: 'چاتبۆتی نووسین بۆ کۆپی کردن', url: 'https://www.copy.ai' },
-                { name: 'Rytr', desc: 'چاتبۆتی نووسین بۆ هەموو شێوەکان', url: 'https://rytr.me' },
-                { name: 'Wordtune', desc: 'چاتبۆتی نووسین بۆ گۆڕینی وتار', url: 'https://www.wordtune.com' },
-                { name: 'Quillbot', desc: 'چاتبۆتی نووسین بۆ پارافڕێز کردن', url: 'https://quillbot.com' },
-                { name: 'INK Editor', desc: 'چاتبۆتی نووسین بۆ نووسینی پەیامەکان', url: 'https://inkforall.com' },
-                { name: 'Text Blaze', desc: 'چاتبۆتی نووسین بۆ فەرمی نووسین', url: 'https://blaze.today' },
-                { name: 'Anyword', desc: 'چاتبۆتی نووسین بۆ نووسینی هەموو شێوەکان', url: 'https://anyword.com' },
-                { name: 'Writesonic', desc: 'چاتبۆتی نووسین بۆ نووسینی زۆر بە شێوەیەکی زۆر', url: 'https://writesonic.com' },
-                { name: 'Snazzy AI', desc: 'چاتبۆتی نووسین بۆ نووسینی فەرمی نووسین', url: 'https://snazzy.ai' },
-                { name: 'AI Dungeon', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی ئیشکراویەکان', url: 'https://play.aidungeon.io' },
-                { name: 'Poe', desc: 'چاتبۆتی نووسین بۆ نووسینی فەرمی نووسین', url: 'https://poe.com' },
-                { name: 'Character AI', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی کردارەکان', url: 'https://character.ai' },
-                { name: 'Replika', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی هاوکار', url: 'https://replika.ai' },
-                { name: 'AI Picasso', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://aipicasso.com' },
-                { name: 'DeepAI', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://deepai.org' },
-                { name: 'NightCafe', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://nightcafe.studio' },
-                { name: 'Artbreeder', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://www.artbreeder.com' },
-                { name: 'Runway ML', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://runwayml.com' },
-                { name: 'Craiyon', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://www.craiyon.com' },
-                { name: 'StarryAI', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://starryai.com' },
-                { name: 'Deep Dream Generator', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://deepdreamgenerator.com' },
-                { name: 'Photosonic', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://photosonic.ai' },
-                { name: 'PaintsChainer', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://paintschainer.preferred.tech' },
-                { name: 'AI Gahaku', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://ai-art.tokyo/en/' },
-                { name: 'AI Painter', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://www.aipainter.ai' },
-                { name: 'AI Art Generator', desc: 'چاتبۆتی هۆشمەند بۆ دروستکردنی وێنە', url: 'https://www.artificial-intelligence.art' },
+                { name: 'ChatGPT', desc: 'باشترین چاتبووتێ زیرەک یا OpenAI', url: 'https://chat.openai.com' },
+                { name: 'Google Bard', desc: 'چاتبووتێ نوی یا گووگڵ', url: 'https://bard.google.com' },
+                { name: 'Microsoft Copilot', desc: 'چاتبووتێ زیرەک یا مایکروسوفت', url: 'https://www.microsoft.com/copilot' },
+                { name: 'ChatSonic', desc: 'چاتبووتێ زیرەک بۆ کارێن نوێ', url: 'https://writesonic.com/chat' },
+                { name: 'Jasper', desc: 'چاتبووتێ نووسین بۆ مارکێتینگ', url: 'https://www.jasper.ai' },
+                { name: 'Copy.ai', desc: 'چاتبووتێ نووسین بۆ کۆپی کرن', url: 'https://www.copy.ai' },
+                { name: 'Rytr', desc: 'چاتبووتێ نووسین بۆ هەموو جۆرێ', url: 'https://rytr.me' },
+                { name: 'Wordtune', desc: 'چاتبووتێ نووسین بۆ گوهورینێ وتار', url: 'https://www.wordtune.com' },
+                { name: 'Quillbot', desc: 'چاتبووتێ نووسین بۆ پارافریز کرن', url: 'https://quillbot.com' },
+                { name: 'INK Editor', desc: 'چاتبووتێ نووسین بۆ نووسینێ پەیام', url: 'https://inkforall.com' },
+                { name: 'Text Blaze', desc: 'چاتبووتێ نووسین بۆ نووسینێ فەرمی', url: 'https://blaze.today' },
+                { name: 'Anyword', desc: 'چاتبووتێ نووسین بۆ هەموو جۆرێ', url: 'https://anyword.com' },
+                { name: 'Writesonic', desc: 'چاتبووتێ نووسین بۆ نووسینێ زۆر ب جۆرێن جیاواز', url: 'https://writesonic.com' },
+                { name: 'Snazzy AI', desc: 'چاتبووتێ نووسین بۆ نووسینێ فەرمی', url: 'https://snazzy.ai' },
+                { name: 'AI Dungeon', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا ئیشکراویێن نوێ', url: 'https://play.aidungeon.io' },
+                { name: 'Poe', desc: 'چاتبووتێ نووسین بۆ نووسینێ فەرمی', url: 'https://poe.com' },
+                { name: 'Character AI', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا کردار', url: 'https://character.ai' },
+                { name: 'Replika', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا هاوکار', url: 'https://replika.ai' },
+                { name: 'AI Picasso', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://aipicasso.com' },
+                { name: 'DeepAI', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://deepai.org' },
+                { name: 'NightCafe', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://nightcafe.studio' },
+                { name: 'Artbreeder', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://www.artbreeder.com' },
+                { name: 'Runway ML', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://runwayml.com' },
+                { name: 'Craiyon', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://www.craiyon.com' },
+                { name: 'StarryAI', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://starryai.com' },
+                { name: 'Deep Dream Generator', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://deepdreamgenerator.com' },
+                { name: 'Photosonic', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://photosonic.ai' },
+                { name: 'PaintsChainer', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://paintschainer.preferred.tech' },
+                { name: 'AI Gahaku', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://ai-art.tokyo/en/' },
+                { name: 'AI Painter', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://www.aipainter.ai' },
+                { name: 'AI Art Generator', desc: 'چاتبووتێ زیرەک بۆ دروستکرنا وێنە', url: 'https://www.artificial-intelligence.art' },
             ]
         },
         {
-            title: '🎬 ڤیدیۆ و ئەنیمەیشن',
+            title: '🎬 ڤیدیۆ و ئەنیمەسیۆن',
             tools: [
-                { name: 'Adobe Premiere Pro', desc: 'ئامێرێن ڤیدیۆیێن پەیشەنگ', url: 'https://www.adobe.com/products/premiere.html' },
-                { name: 'Final Cut Pro', desc: 'ئامێرێن ڤیدیۆیێن پەیشەنگ یا Apple', url: 'https://www.apple.com/final-cut-pro/' },
-                { name: 'Adobe After Effects', desc: 'ئامێرێن ئەنیمەیشن و ئافتر ئێفێکەکان', url: 'https://www.adobe.com/products/aftereffects.html' },
-                { name: 'DaVinci Resolve', desc: 'ئامێرێن ڤیدیۆیێن پەیشەنگ و فەرمی', url: 'https://www.blackmagicdesign.com/products/davinciresolve/' },
+                { name: 'Adobe Premiere Pro', desc: 'ئامێرێن ڤیدیۆیێن پێشەنگ', url: 'https://www.adobe.com/products/premiere.html' },
+                { name: 'Final Cut Pro', desc: 'ئامێرێن ڤیدیۆیێن پێشەنگ یا Apple', url: 'https://www.apple.com/final-cut-pro/' },
+                { name: 'Adobe After Effects', desc: 'ئامێرێن ئەنیمەسیۆن و ئافتر ئێفێکت', url: 'https://www.adobe.com/products/aftereffects.html' },
+                { name: 'DaVinci Resolve', desc: 'ئامێرێن ڤیدیۆیێن پێشەنگ و فەرمی', url: 'https://www.blackmagicdesign.com/products/davinciresolve/' },
                 { name: 'HitFilm Express', desc: 'ئامێرێن ڤیدیۆیێن پەیوەندیدار', url: 'https://fxhome.com/product/hitfilm-express' },
-                { name: 'Blender', desc: 'ئامێرێن 3D بۆ ڤیدیۆ و ئەنیمەیشن', url: 'https://www.blender.org' },
+                { name: 'Blender', desc: 'ئامێرێن 3D بۆ ڤیدیۆ و ئەنیمەسیۆن', url: 'https://www.blender.org' },
                 { name: 'OpenShot', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'https://www.openshot.org' },
                 { name: 'Shotcut', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'https://shotcut.org' },
                 { name: 'VSDC Free Video Editor', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'http://www.videosoftdev.com/free-video-editor' },
@@ -456,10 +478,10 @@
                 { name: 'Kapwing', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'https://www.kapwing.com' },
                 { name: 'WeVideo', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'https://www.wevideo.com' },
                 { name: 'FlexClip', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'https://www.flexclip.com' },
-                { name: 'Animaker', desc: 'ئامێرێن ئەنیمەیشن بۆ ڤیدیۆ', url: 'https://www.animaker.com' },
+                { name: 'Animaker', desc: 'ئامێرێن ئەنیمەسیۆن بۆ ڤیدیۆ', url: 'https://www.animaker.com' },
                 { name: 'Renderforest', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'https://www.renderforest.com' },
-                { name: 'Powtoon', desc: 'ئامێرێن ئەنیمەیشن بۆ ڤیدیۆ', url: 'https://www.powtoon.com' },
-                { name: 'Moovly', desc: 'ئامێرێن ئەنیمەیشن بۆ ڤیدیۆ', url: 'https://www.moovly.com' },
+                { name: 'Powtoon', desc: 'ئامێرێن ئەنیمەسیۆن بۆ ڤیدیۆ', url: 'https://www.powtoon.com' },
+                { name: 'Moovly', desc: 'ئامێرێن ئەنیمەسیۆن بۆ ڤیدیۆ', url: 'https://www.moovly.com' },
                 { name: 'Veed.io', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'https://www.veed.io' },
                 { name: 'Wave.video', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'https://wave.video' },
                 { name: 'InVideo', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی', url: 'https://invideo.io' },
@@ -474,125 +496,125 @@
                 { name: 'KineMaster', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی بۆ موبایل', url: 'https://www.kinemaster.com' },
                 { name: 'VivaVideo', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی بۆ موبایل', url: 'https://www.vivavideo.tv' },
                 { name: 'VideoShow', desc: 'ئامێرێن ڤیدیۆیێن بەرز و فەرمی بۆ موبایل', url: 'https://videoshowapp.com' },
-                { name: 'Funimate', desc: 'ئامێرێن ئەنیمەیشن بۆ ڤیدیۆی موبایل', url: 'https://www.funimate.com' },
-                { name: 'Alight Motion', desc: 'ئامێرێن ئەنیمەیشن بۆ ڤیدیۆی موبایل', url: 'https://alightmotion.com' },
-                { name: 'Pixaloop', desc: 'ئامێرێن ئەنیمەیشن بۆ وێنە', url: 'https://pixaloop.en.softonic.com' },
-                { name: 'GIF Maker', desc: 'دروستکردنی GIF بۆ ڤیدیۆ', url: 'https://gifmaker.me' },
+                { name: 'Funimate', desc: 'ئامێرێن ئەنیمەسیۆن بۆ ڤیدیۆی موبایل', url: 'https://www.funimate.com' },
+                { name: 'Alight Motion', desc: 'ئامێرێن ئەنیمەسیۆن بۆ ڤیدیۆی موبایل', url: 'https://alightmotion.com' },
+                { name: 'Pixaloop', desc: 'ئامێرێن ئەنیمەسیۆن بۆ وێنە', url: 'https://pixaloop.en.softonic.com' },
+                { name: 'GIF Maker', desc: 'دروستکرنا GIF بۆ ڤیدیۆ', url: 'https://gifmaker.me' },
             ]
         },
         {
             title: '🌐 وەرگێران',
             tools: [
-                { name: 'Google Translate', desc: 'وەرگێرانە گووگڵی', url: 'https://translate.google.com' },
-                { name: 'DeepL Translator', desc: 'وەرگێرانە هونەری', url: 'https://www.deepl.com' },
-                { name: 'Microsoft Translator', desc: 'وەرگێرانە مایکروسۆفت', url: 'https://www.bing.com/translator' },
-                { name: 'iTranslate', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.itranslate.com' },
-                { name: 'Reverso Context', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.reverso.net/text_translation.aspx?lang=EN' },
-                { name: 'SYSTRAN Translate', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.systransoft.com' },
-                { name: 'LingvaNex', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://lingvanex.com' },
-                { name: 'Translate.com', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.translate.com' },
-                { name: 'Online Translator', desc: 'وەرگێرانە ب', url: 'https://www.onlinetranslator.com' },
-                { name: 'FreeTranslation.com', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.freetranslation.com' },
-                { name: 'Babylon Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.babylon-software.com' },
-                { name: 'WordReference', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.wordreference.com' },
-                { name: 'Collins Dictionary', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.collinsdictionary.com/translator' },
-                { name: 'Oxford Languages', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://languages.oup.com/oxford-english-dictionary/translate' },
-                { name: 'Cambridge Dictionary', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://dictionary.cambridge.org/translator' },
-                { name: 'Macmillan Dictionary', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.macmillandictionary.com/translator' },
-                { name: 'Longman Dictionary', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.longmandictionary.com/translator' },
-                { name: 'American Heritage Dictionary', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://ahdictionary.com' },
-                { name: 'Chambers Dictionary', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://chambers.co.uk/translator' },
-                { name: 'Chichewa Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.chichewatranslator.com' },
-                { name: 'Chinese Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.chinesetranslator.com' },
-                { name: 'Japanese Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.japanesetranslator.com' },
-                { name: 'Korean Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.koreantranslator.com' },
-                { name: 'Arabic Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.arabictranslator.com' },
-                { name: 'Russian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.russiantranslator.com' },
-                { name: 'Spanish Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.spanishtranslator.com' },
-                { name: 'French Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.frenchtranslator.com' },
-                { name: 'German Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.germantranslator.com' },
-                { name: 'Italian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.italiantranslator.com' },
-                { name: 'Dutch Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.dutchtranslator.com' },
-                { name: 'Swedish Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.swedishtranslator.com' },
-                { name: 'Norwegian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.norwegianstranslator.com' },
-                { name: 'Finnish Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.finnishtranslator.com' },
-                { name: 'Danish Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.danishtranslator.com' },
-                { name: 'Hebrew Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.hebrewtranslator.com' },
-                { name: 'Thai Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.thaitranslator.com' },
-                { name: 'Vietnamese Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.vietnamesetranslator.com' },
-                { name: 'Indonesian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.indonesiantranslator.com' },
-                { name: 'Filipino Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.filipinotranslator.com' },
-                { name: 'Malay Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.malaytranslator.com' },
-                { name: 'Swahili Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.swahilitranslator.com' },
-                { name: 'Ukrainian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.ukrainiantranslator.com' },
-                { name: 'Romanian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.romaniantranslator.com' },
-                { name: 'Bulgarian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.bulgariantranslator.com' },
-                { name: 'Czech Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.czechtranslator.com' },
-                { name: 'Hungarian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.hungariantranslator.com' },
-                { name: 'Slovak Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.slovaktranslator.com' },
-                { name: 'Slovenian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.sloveniantranslator.com' },
-                { name: 'Estonian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.estoniantranslator.com' },
-                { name: 'Latvian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.latviantranslator.com' },
-                { name: 'Lithuanian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.lithuaniantranslator.com' },
-                { name: 'Armenian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.armeniantranslator.com' },
-                { name: 'Azerbaijani Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.azerbaijantranslator.com' },
-                { name: 'Georgian Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.georgiantranslator.com' },
-                { name: 'Basque Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.basquetranslator.com' },
-                { name: 'Catalan Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.catalantranslator.com' },
-                { name: 'Galician Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.galiciantranslator.com' },
-                { name: 'Welsh Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.welshtranslator.com' },
-                { name: 'Scottish Gaelic Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.scottishgaelictranslator.com' },
-                { name: 'Irish Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.irishttranslator.com' },
-                { name: 'Latin Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.latintranslator.com' },
-                { name: 'Esperanto Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.esperantotranslator.com' },
-                { name: 'Interlingua Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.interlinguatranslator.com' },
-                { name: 'Ido Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.idotranslator.com' },
-                { name: 'Lingua Franca Nova Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.lingua-franca-nova-translator.com' },
-                { name: 'Volapük Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.volapuktranslator.com' },
-                { name: 'Oberlín Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.oberlintranslator.com' },
-                { name: 'Solresol Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.solresoltranslator.com' },
-                { name: "Na'vi Translator", desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.navi-translator.com' },
-                { name: 'Quenya Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.quenya-translator.com' },
-                { name: 'Sindarin Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.sindarin-translator.com' },
-                { name: 'Huttese Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.huttese-translator.com' },
-                { name: 'Shyriiwook Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.shyriiwook-translator.com' },
-                { name: 'Binary Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.binarytranslator.com' },
-                { name: 'Hexadecimal Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.hexadecimaltranslator.com' },
-                { name: 'URL Encoder/Decoder', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.urlencoder.org' },
-                { name: 'Base64 Encoder/Decoder', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.base64decode.net' },
-                { name: 'Markdown Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.markdowntranslator.com' },
-                { name: 'YAML Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.yamltranslator.com' },
-                { name: 'CSV Translator', desc: 'وەرگێرانە بەرز و فەرمی', url: 'https://www.csvtranslator.com' },
+                { name: 'Google Translate', desc: 'وەرگێرانێ گووگڵ', url: 'https://translate.google.com' },
+                { name: 'DeepL Translator', desc: 'وەرگێرانێ هونەری', url: 'https://www.deepl.com' },
+                { name: 'Microsoft Translator', desc: 'وەرگێرانێ مایکروسوفت', url: 'https://www.bing.com/translator' },
+                { name: 'iTranslate', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.itranslate.com' },
+                { name: 'Reverso Context', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.reverso.net/text_translation.aspx?lang=EN' },
+                { name: 'SYSTRAN Translate', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.systransoft.com' },
+                { name: 'LingvaNex', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://lingvanex.com' },
+                { name: 'Translate.com', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.translate.com' },
+                { name: 'Online Translator', desc: 'وەرگێرانێ بەرز', url: 'https://www.onlinetranslator.com' },
+                { name: 'FreeTranslation.com', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.freetranslation.com' },
+                { name: 'Babylon Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.babylon-software.com' },
+                { name: 'WordReference', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.wordreference.com' },
+                { name: 'Collins Dictionary', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.collinsdictionary.com/translator' },
+                { name: 'Oxford Languages', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://languages.oup.com/oxford-english-dictionary/translate' },
+                { name: 'Cambridge Dictionary', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://dictionary.cambridge.org/translator' },
+                { name: 'Macmillan Dictionary', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.macmillandictionary.com/translator' },
+                { name: 'Longman Dictionary', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.longmandictionary.com/translator' },
+                { name: 'American Heritage Dictionary', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://ahdictionary.com' },
+                { name: 'Chambers Dictionary', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://chambers.co.uk/translator' },
+                { name: 'Chichewa Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.chichewatranslator.com' },
+                { name: 'Chinese Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.chinesetranslator.com' },
+                { name: 'Japanese Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.japanesetranslator.com' },
+                { name: 'Korean Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.koreantranslator.com' },
+                { name: 'Arabic Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.arabictranslator.com' },
+                { name: 'Russian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.russiantranslator.com' },
+                { name: 'Spanish Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.spanishtranslator.com' },
+                { name: 'French Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.frenchtranslator.com' },
+                { name: 'German Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.germantranslator.com' },
+                { name: 'Italian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.italiantranslator.com' },
+                { name: 'Dutch Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.dutchtranslator.com' },
+                { name: 'Swedish Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.swedishtranslator.com' },
+                { name: 'Norwegian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.norwegianstranslator.com' },
+                { name: 'Finnish Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.finnishtranslator.com' },
+                { name: 'Danish Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.danishtranslator.com' },
+                { name: 'Hebrew Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.hebrewtranslator.com' },
+                { name: 'Thai Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.thaitranslator.com' },
+                { name: 'Vietnamese Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.vietnamesetranslator.com' },
+                { name: 'Indonesian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.indonesiantranslator.com' },
+                { name: 'Filipino Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.filipinotranslator.com' },
+                { name: 'Malay Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.malaytranslator.com' },
+                { name: 'Swahili Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.swahilitranslator.com' },
+                { name: 'Ukrainian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.ukrainiantranslator.com' },
+                { name: 'Romanian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.romaniantranslator.com' },
+                { name: 'Bulgarian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.bulgariantranslator.com' },
+                { name: 'Czech Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.czechtranslator.com' },
+                { name: 'Hungarian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.hungariantranslator.com' },
+                { name: 'Slovak Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.slovaktranslator.com' },
+                { name: 'Slovenian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.sloveniantranslator.com' },
+                { name: 'Estonian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.estoniantranslator.com' },
+                { name: 'Latvian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.latviantranslator.com' },
+                { name: 'Lithuanian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.lithuaniantranslator.com' },
+                { name: 'Armenian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.armeniantranslator.com' },
+                { name: 'Azerbaijani Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.azerbaijantranslator.com' },
+                { name: 'Georgian Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.georgiantranslator.com' },
+                { name: 'Basque Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.basquetranslator.com' },
+                { name: 'Catalan Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.catalantranslator.com' },
+                { name: 'Galician Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.galiciantranslator.com' },
+                { name: 'Welsh Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.welshtranslator.com' },
+                { name: 'Scottish Gaelic Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.scottishgaelictranslator.com' },
+                { name: 'Irish Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.irishttranslator.com' },
+                { name: 'Latin Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.latintranslator.com' },
+                { name: 'Esperanto Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.esperantotranslator.com' },
+                { name: 'Interlingua Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.interlinguatranslator.com' },
+                { name: 'Ido Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.idotranslator.com' },
+                { name: 'Lingua Franca Nova Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.lingua-franca-nova-translator.com' },
+                { name: 'Volapük Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.volapuktranslator.com' },
+                { name: 'Oberlín Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.oberlintranslator.com' },
+                { name: 'Solresol Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.solresoltranslator.com' },
+                { name: "Na'vi Translator", desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.navi-translator.com' },
+                { name: 'Quenya Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.quenya-translator.com' },
+                { name: 'Sindarin Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.sindarin-translator.com' },
+                { name: 'Huttese Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.huttese-translator.com' },
+                { name: 'Shyriiwook Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.shyriiwook-translator.com' },
+                { name: 'Binary Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.binarytranslator.com' },
+                { name: 'Hexadecimal Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.hexadecimaltranslator.com' },
+                { name: 'URL Encoder/Decoder', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.urlencoder.org' },
+                { name: 'Base64 Encoder/Decoder', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.base64decode.net' },
+                { name: 'Markdown Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.markdowntranslator.com' },
+                { name: 'YAML Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.yamltranslator.com' },
+                { name: 'CSV Translator', desc: 'وەرگێرانێ بەرز و فەرمی', url: 'https://www.csvtranslator.com' },
             ]
         },
         {
-            title: '📚 فێرکاری و خوێندن',
+            title: '📚 فێربوون و خوێندن',
             tools: [
-                { name: 'Khan Academy', desc: 'فێرکاری بۆ هەموو قۆناغەکان', url: 'https://www.khanacademy.org' },
-                { name: 'Coursera', desc: 'کۆرسەکان و فێرکارییەکان', url: 'https://www.coursera.org' },
-                { name: 'edX', desc: 'کۆرسەکان و فێرکارییەکان', url: 'https://www.edx.org' },
-                { name: 'Udemy', desc: 'کۆرسەکان و فێرکارییەکان', url: 'https://www.udemy.com' },
-                { name: 'Duolingo', desc: 'فێربوونی زمان', url: 'https://www.duolingo.com' },
-                { name: 'FutureLearn', desc: 'کۆرسەکان و فێرکارییەکان', url: 'https://www.futurelearn.com' },
-                { name: 'Brilliant', desc: 'فێرکارییەکانی زانست و بیرکاری', url: 'https://brilliant.org' },
-                { name: 'OpenAI Learn', desc: 'فێرکارییەکانی AI', url: 'https://learn.openai.com' },
-                { name: 'Codecademy', desc: 'فێربوونی کۆدکردن', url: 'https://www.codecademy.com' },
-                { name: 'Skillshare', desc: 'فێرکارییەکانی هونەر و دیزاین', url: 'https://www.skillshare.com' },
+                { name: 'Khan Academy', desc: 'فێربوون بۆ هەموو قۆناغ', url: 'https://www.khanacademy.org' },
+                { name: 'Coursera', desc: 'کورس و فێربوون', url: 'https://www.coursera.org' },
+                { name: 'edX', desc: 'کورس و فێربوون', url: 'https://www.edx.org' },
+                { name: 'Udemy', desc: 'کورس و فێربوون', url: 'https://www.udemy.com' },
+                { name: 'Duolingo', desc: 'فێربوونا زمان', url: 'https://www.duolingo.com' },
+                { name: 'FutureLearn', desc: 'کورس و فێربوون', url: 'https://www.futurelearn.com' },
+                { name: 'Brilliant', desc: 'فێربوونا زانست و بیرکاری', url: 'https://brilliant.org' },
+                { name: 'OpenAI Learn', desc: 'فێربوونا AI', url: 'https://learn.openai.com' },
+                { name: 'Codecademy', desc: 'فێربوونا کۆدکرن', url: 'https://www.codecademy.com' },
+                { name: 'Skillshare', desc: 'فێربوونا هونەر و دیزاین', url: 'https://www.skillshare.com' },
             ]
         },
         {
             title: '📰 هەواڵ و زانیاری',
             tools: [
-                { name: 'BBC News', desc: 'هەواڵی جیهانی', url: 'https://www.bbc.com/news' },
-                { name: 'CNN', desc: 'هەواڵی جیهانی', url: 'https://www.cnn.com' },
-                { name: 'Rudaw', desc: 'هەواڵی کوردی', url: 'https://www.rudaw.net' },
-                { name: 'Kurdistan24', desc: 'هەواڵی کوردی', url: 'https://www.kurdistan24.net' },
-                { name: 'Al Jazeera', desc: 'هەواڵی جیهانی', url: 'https://www.aljazeera.com' },
-                { name: 'Reuters', desc: 'هەواڵی جیهانی', url: 'https://www.reuters.com' },
-                { name: 'VOA Kurdish', desc: 'هەواڵی کوردی', url: 'https://www.dengiamerika.com' },
-                { name: 'BasNews', desc: 'هەواڵی کوردی', url: 'https://www.basnews.com' },
-                { name: 'France24', desc: 'هەواڵی جیهانی', url: 'https://www.france24.com' },
-                { name: 'Sky News', desc: 'هەواڵی جیهانی', url: 'https://news.sky.com' },
+                { name: 'BBC News', desc: 'هەواڵێ جیهانی', url: 'https://www.bbc.com/news' },
+                { name: 'CNN', desc: 'هەواڵێ جیهانی', url: 'https://www.cnn.com' },
+                { name: 'Rudaw', desc: 'هەواڵێ کوردی', url: 'https://www.rudaw.net' },
+                { name: 'Kurdistan24', desc: 'هەواڵێ کوردی', url: 'https://www.kurdistan24.net' },
+                { name: 'Al Jazeera', desc: 'هەواڵێ جیهانی', url: 'https://www.aljazeera.com' },
+                { name: 'Reuters', desc: 'هەواڵێ جیهانی', url: 'https://www.reuters.com' },
+                { name: 'VOA Kurdish', desc: 'هەواڵێ کوردی', url: 'https://www.dengiamerika.com' },
+                { name: 'BasNews', desc: 'هەواڵێ کوردی', url: 'https://www.basnews.com' },
+                { name: 'France24', desc: 'هەواڵێ جیهانی', url: 'https://www.france24.com' },
+                { name: 'Sky News', desc: 'هەواڵێ جیهانی', url: 'https://news.sky.com' },
             ]
         },
         {
@@ -602,51 +624,51 @@
                 { name: 'Mayo Clinic', desc: 'زانیاری پزیشکی', url: 'https://www.mayoclinic.org' },
                 { name: 'Healthline', desc: 'زانیاری پزیشکی', url: 'https://www.healthline.com' },
                 { name: 'MedlinePlus', desc: 'زانیاری پزیشکی', url: 'https://medlineplus.gov' },
-                { name: 'WHO', desc: 'سازمانەتی تەندروستی جیهانی', url: 'https://www.who.int' },
-                { name: 'PubMed', desc: 'زانستی پزیشکی و توێژینەوە', url: 'https://pubmed.ncbi.nlm.nih.gov' },
+                { name: 'WHO', desc: 'کۆمپانیا تەندروستی جیهانی', url: 'https://www.who.int' },
+                { name: 'PubMed', desc: 'زانستێ پزیشکی و توێژینەوە', url: 'https://pubmed.ncbi.nlm.nih.gov' },
                 { name: 'Cleveland Clinic', desc: 'زانیاری پزیشکی', url: 'https://my.clevelandclinic.org' },
                 { name: 'Drugs.com', desc: 'زانیاری دەرمان', url: 'https://www.drugs.com' },
                 { name: 'NHS', desc: 'زانیاری پزیشکی', url: 'https://www.nhs.uk' },
-                { name: 'KidsHealth', desc: 'زانیاری پزیشکی بۆ منداڵان', url: 'https://kidshealth.org' },
+                { name: 'KidsHealth', desc: 'زانیاری پزیشکی بۆ منداڵ', url: 'https://kidshealth.org' },
             ]
         },
         {
             title: '💼 کار و بازاڕ',
             tools: [
                 { name: 'LinkedIn', desc: 'دۆزینەوەی کار و پەیوەندی', url: 'https://www.linkedin.com' },
-                { name: 'Glassdoor', desc: 'زانیاری بازاڕی کار', url: 'https://www.glassdoor.com' },
+                { name: 'Glassdoor', desc: 'زانیاری بازاڕێ کار', url: 'https://www.glassdoor.com' },
                 { name: 'Indeed', desc: 'دۆزینەوەی کار', url: 'https://www.indeed.com' },
                 { name: 'Monster', desc: 'دۆزینەوەی کار', url: 'https://www.monster.com' },
-                { name: 'Bayt', desc: 'دۆزینەوەی کار لە ناوچەی عەرەبی', url: 'https://www.bayt.com' },
-                { name: 'Naukri', desc: 'دۆزینەوەی کار لە هیندستان', url: 'https://www.naukri.com' },
-                { name: 'Upwork', desc: 'کارکردنی فریلانس', url: 'https://www.upwork.com' },
-                { name: 'Fiverr', desc: 'کارکردنی فریلانس', url: 'https://www.fiverr.com' },
-                { name: 'Freelancer', desc: 'کارکردنی فریلانس', url: 'https://www.freelancer.com' },
-                { name: 'Remote OK', desc: 'کارکردنی دوور', url: 'https://remoteok.com' },
+                { name: 'Bayt', desc: 'دۆزینەوەی کار ل ناوچە عەرەبی', url: 'https://www.bayt.com' },
+                { name: 'Naukri', desc: 'دۆزینەوەی کار ل هیندستان', url: 'https://www.naukri.com' },
+                { name: 'Upwork', desc: 'کارکرنا فریلانس', url: 'https://www.upwork.com' },
+                { name: 'Fiverr', desc: 'کارکرنا فریلانس', url: 'https://www.fiverr.com' },
+                { name: 'Freelancer', desc: 'کارکرنا فریلانس', url: 'https://www.freelancer.com' },
+                { name: 'Remote OK', desc: 'کارکرنا دوور', url: 'https://remoteok.com' },
             ]
         },
         {
-            title: '🧑‍💻 گەشەپێدانی وێبسایت و بەرنامە',
+            title: '🧑‍💻 گەشەپێدانا وێبسایت و بەرنامە',
             tools: [
-                { name: 'GitHub', desc: 'پلاتفۆرمی گەشەپێدان', url: 'https://github.com' },
+                { name: 'GitHub', desc: 'پلاتفۆرما گەشەپێدان', url: 'https://github.com' },
                 { name: 'Stack Overflow', desc: 'کۆمەڵگەی گەشەپێدان', url: 'https://stackoverflow.com' },
-                { name: 'CodePen', desc: 'تاقیکردنەوەی کۆد', url: 'https://codepen.io' },
-                { name: 'JSFiddle', desc: 'تاقیکردنەوەی کۆد', url: 'https://jsfiddle.net' },
-                { name: 'Glitch', desc: 'دروستکردنی وێبسایت', url: 'https://glitch.com' },
-                { name: 'Netlify', desc: 'بڵاوکردنەوەی وێبسایت', url: 'https://www.netlify.com' },
-                { name: 'Vercel', desc: 'بڵاوکردنەوەی وێبسایت', url: 'https://vercel.com' },
-                { name: 'Replit', desc: 'تاقیکردنەوەی کۆد', url: 'https://replit.com' },
-                { name: 'W3Schools', desc: 'فێرکاری وەب', url: 'https://www.w3schools.com' },
-                { name: 'MDN Web Docs', desc: 'فێرکاری وەب', url: 'https://developer.mozilla.org' },
+                { name: 'CodePen', desc: 'تاقیکرنەوەی کۆد', url: 'https://codepen.io' },
+                { name: 'JSFiddle', desc: 'تاقیکرنەوەی کۆد', url: 'https://jsfiddle.net' },
+                { name: 'Glitch', desc: 'دروستکرنا وێبسایت', url: 'https://glitch.com' },
+                { name: 'Netlify', desc: 'بڵاوکرنا وێبسایت', url: 'https://www.netlify.com' },
+                { name: 'Vercel', desc: 'بڵاوکرنا وێبسایت', url: 'https://vercel.com' },
+                { name: 'Replit', desc: 'تاقیکرنەوەی کۆد', url: 'https://replit.com' },
+                { name: 'W3Schools', desc: 'فێربوونا وەب', url: 'https://www.w3schools.com' },
+                { name: 'MDN Web Docs', desc: 'فێربوونا وەب', url: 'https://developer.mozilla.org' },
             ]
         },
         {
             title: '🧠 زانست و توێژینەوە',
             tools: [
-                { name: 'ScienceDirect', desc: 'توێژینەوەی زانستی', url: 'https://www.sciencedirect.com' },
-                { name: 'Nature', desc: 'گۆڤاری زانستی', url: 'https://www.nature.com' },
+                { name: 'ScienceDirect', desc: 'توێژینەوەی زانست', url: 'https://www.sciencedirect.com' },
+                { name: 'Nature', desc: 'گۆڤاری زانست', url: 'https://www.nature.com' },
                 { name: 'NIH', desc: 'زانکۆی پزیشکی', url: 'https://www.nih.gov' },
-                { name: 'arXiv', desc: 'توێژینەوەی زانستی و بیرکاری', url: 'https://arxiv.org' },
+                { name: 'arXiv', desc: 'توێژینەوەی زانست و بیرکاری', url: 'https://arxiv.org' },
                 { name: 'Google Scholar', desc: 'گەڕان بۆ توێژینەوە', url: 'https://scholar.google.com' },
                 { name: 'Kurdish Academy', desc: 'زانکۆی کوردی', url: 'https://www.kurdishacademy.org' },
             ]
@@ -655,8 +677,8 @@
             title: '🎵 موزیک و دەنگ',
             tools: [
                 { name: 'Spotify', desc: 'گۆرانی و موزیک', url: 'https://www.spotify.com' },
-                { name: 'SoundCloud', desc: 'هاوبەشکردنی موزیک', url: 'https://soundcloud.com' },
-                { name: 'Anghami', desc: 'موزیک بۆ ناوچەی کوردی', url: 'https://www.anghami.com' },
+                { name: 'SoundCloud', desc: 'هاوبەشکرنا موزیک', url: 'https://soundcloud.com' },
+                { name: 'Anghami', desc: 'موزیک بۆ ناوچە کوردی', url: 'https://www.anghami.com' },
                 { name: 'Radio Garden', desc: 'ڕادیۆی جیهانی', url: 'https://radio.garden' },
                 { name: 'YouTube Music', desc: 'موزیک و گۆرانی', url: 'https://music.youtube.com' },
             ]
@@ -664,8 +686,8 @@
         {
             title: '🗺️ نەخشە و گەشت',
             tools: [
-                { name: 'Google Maps', desc: 'نەخشە و ڕێنوێنی', url: 'https://maps.google.com' },
-                { name: 'Bing Maps', desc: 'نەخشە و ڕێنوێنی', url: 'https://www.bing.com/maps' },
+                { name: 'Google Maps', desc: 'نەخشە و ڕێنوێن', url: 'https://maps.google.com' },
+                { name: 'Bing Maps', desc: 'نەخشە و ڕێنوێن', url: 'https://www.bing.com/maps' },
                 { name: 'OpenStreetMap', desc: 'نەخشەی جیهانی', url: 'https://www.openstreetmap.org' },
                 { name: 'Rome2Rio', desc: 'ڕێنوێنی گەشت', url: 'https://www.rome2rio.com' },
                 { name: 'Tripadvisor', desc: 'ڕێنمایی گەشت و گەشتوگوزار', url: 'https://www.tripadvisor.com' },
@@ -674,10 +696,10 @@
         {
             title: '📷 وێنە و دیزاین',
             tools: [
-                { name: 'Canva', desc: 'دیزاینی وێنە و پۆست', url: 'https://www.canva.com' },
+                { name: 'Canva', desc: 'دیزاینا وێنە و پۆست', url: 'https://www.canva.com' },
                 { name: 'Pixabay', desc: 'وێنەی بێمۆڵەت', url: 'https://pixabay.com' },
                 { name: 'Unsplash', desc: 'وێنەی بێمۆڵەت', url: 'https://unsplash.com' },
-                { name: 'Figma', desc: 'دیزاینی وێب و ئاپلیکەیشن', url: 'https://www.figma.com' },
+                { name: 'Figma', desc: 'دیزاینا وێب و ئاپلیکەیشن', url: 'https://www.figma.com' },
                 { name: 'Behance', desc: 'پڕۆژە و دیزاین', url: 'https://www.behance.net' },
             ]
         },
@@ -705,12 +727,14 @@
                 <button class="overlay-close" onclick="closeOverlay(${idx})"><i class='fas fa-times'></i></button>
             </div>
             <div class="tools-grid">
-                ${cat.tools.map(tool => tool.name ? `
-                <div class="tool-card">
+                ${cat.tools.map((tool, tIdx) => tool.name ? `
+                <div class="tool-card" data-cat="${cat.title}" data-tool="${tool.name}">
                     <div class="tool-content">
                         <h3>${tool.name}</h3>
                         <p>${tool.desc || ''}</p>
-                        ${tool.url ? `<a href="${tool.url}" target="_blank">سەرەدان</a>` : ''}
+                        ${tool.url ? `<a href="${tool.url}" target="_blank">سەردان بکە</a>` : ''}
+                        <button class="more-detail-btn" onclick="showDetailModal('${cat.title.replace(/'/g, '')}','${tool.name.replace(/'/g, '')}','${tool.desc ? tool.desc.replace(/'/g, '') : ''}','${tool.url ? tool.url : ''}','${tool.company || ''}','${tool.year || ''}','${tool.function || ''}')">زانیاری زیاتر</button>
+                        <button class="favorite-btn" onclick="toggleFavorite('${cat.title.replace(/'/g, '')}','${tool.name.replace(/'/g, '')}', this)"><i class="fa fa-heart"></i></button>
                     </div>
                 </div>` : '').join('')}
             </div>
@@ -772,6 +796,59 @@
             card.style.display = text.includes(val) ? '' : 'none';
         });
     });
+    function showDetailModal(cat, name, desc, url, company, year, func) {
+  document.getElementById('detailTitle').innerText = name + ' - ' + cat;
+  document.getElementById('detailDesc').innerText = desc || 'زانیاری بەردەست نیە.';
+  if(url) {
+    document.getElementById('detailUrl').style.display = 'inline-block';
+    document.getElementById('detailUrl').href = url;
+  } else {
+    document.getElementById('detailUrl').style.display = 'none';
+  }
+  let infoHtml = '';
+  if(company) infoHtml += `<div style='margin-top:0.7rem;'>کۆمپانیا: <b>${company}</b></div>`;
+  if(year) infoHtml += `<div>ساڵی دروستکرن: <b>${year}</b></div>`;
+  if(func) infoHtml += `<div>کار: <b>${func}</b></div>`;
+  document.getElementById('detailInfo').innerHTML = infoHtml;
+  document.getElementById('detailModal').classList.add('active');
+}
+function closeDetailModal() {
+  document.getElementById('detailModal').classList.remove('active');
+}
+document.getElementById('detailModal').addEventListener('click', function(e) {
+  if(e.target === this) closeDetailModal();
+});
+    // Favorite logic
+function toggleFavorite(cat, name, btn) {
+  let favs = JSON.parse(localStorage.getItem('favTools')||'[]');
+  const key = cat+'-'+name;
+  if(favs.includes(key)) {
+    favs = favs.filter(f=>f!==key);
+    btn.classList.remove('active');
+  } else {
+    favs.push(key);
+    btn.classList.add('active');
+  }
+  localStorage.setItem('favTools', JSON.stringify(favs));
+  updateFavoriteUI();
+}
+function updateFavoriteUI() {
+  let favs = JSON.parse(localStorage.getItem('favTools')||'[]');
+  document.querySelectorAll('.favorite-btn').forEach(btn=>{
+    const card = btn.closest('.tool-card');
+    const key = card.getAttribute('data-cat')+'-'+card.getAttribute('data-tool');
+    if(favs.includes(key)) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+}
+document.getElementById('showFavoritesBtn').onclick = function() {
+  let favs = JSON.parse(localStorage.getItem('favTools')||'[]');
+  document.querySelectorAll('.tool-card').forEach(card=>{
+    const key = card.getAttribute('data-cat')+'-'+card.getAttribute('data-tool');
+    card.style.display = favs.includes(key)?'':'none';
+  });
+};
+window.addEventListener('DOMContentLoaded', updateFavoriteUI);
     </script>
 </body>
 </html>
