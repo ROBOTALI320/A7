@@ -288,9 +288,75 @@
             transition: color 0.3s ease;
         }
         .social-links a:hover { color: var(--accent); }
+        /* Entrance Overlay */
+        #entranceOverlay {
+            position: fixed;
+            z-index: 5000;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .entrance-container {
+            text-align: center;
+            color: #fff;
+        }
+        .entrance-logo {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        .entrance-title {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .entrance-desc {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+        .entrance-btn {
+            display: inline-block;
+            padding: 0.8rem 1.6rem;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .entrance-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        .entrance-footer {
+            color: #b3b3b3;
+            margin-top: 2.5rem;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body>
+    <!-- Entrance Overlay -->
+    <div id="entranceOverlay" style="position:fixed;z-index:5000;top:0;left:0;width:100vw;height:100vh;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div class="entrance-container">
+            <div class="entrance-logo">A7</div>
+            <div class="entrance-title">بخێر هاتی</div>
+            <div class="entrance-desc>
+                 <br>
+                <span style="color:#ff6600;font-weight:bold;"> </span>
+            </div>
+            <a class="entrance-btn" href="#" onclick="hideEntrance(event)">چوونە ژوور</a>
+        </div>
+        <div class="entrance-footer" style="color:#b3b3b3;margin-top:2.5rem;font-size:0.95rem;">&copy; 2025 A7</div>
+    </div>
     <nav>
         <div class="logo">ALPHA7.AI</div>
         <div class="nav-links">
@@ -326,6 +392,10 @@
         <p style="color: var(--text-secondary); margin-top: 1rem;">© 2025 ALPHA7.AI -.</p>
     </footer>
     <script>
+    function hideEntrance(e) {
+        e.preventDefault();
+        document.getElementById('entranceOverlay').style.display = 'none';
+    }
     // --- DATA: All categories and tools (preserved, add your full data here) ---
     const categories = [
         {
