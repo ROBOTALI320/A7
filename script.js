@@ -176,40 +176,53 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('scrollTopBtn').setAttribute('title', 'بچە سەرڤە');
     document.getElementById('scrollTopBtn').innerHTML = '<i class="fas fa-arrow-up"></i>';
 });
-let lastScrollY = 0;
+let ticking = false;
 function handleMobileScrollAnim() {
-    if (window.innerWidth <= 700) {
-        if (window.scrollY > 30) {
-            document.body.classList.add('scrolled-down');
-        } else {
-            document.body.classList.remove('scrolled-down');
-        }
-    } else {
-        document.body.classList.remove('scrolled-down');
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            if (window.innerWidth <= 700) {
+                if (window.scrollY > 30) {
+                    document.body.classList.add('scrolled-down');
+                } else {
+                    document.body.classList.remove('scrolled-down');
+                }
+            } else {
+                document.body.classList.remove('scrolled-down');
+            }
+            ticking = false;
+        });
+        ticking = true;
     }
 }
-window.addEventListener('scroll', handleMobileScrollAnim);
+window.addEventListener('scroll', handleMobileScrollAnim, { passive: true });
 window.addEventListener('resize', handleMobileScrollAnim);
+
 let lastMobileScrollY = window.scrollY;
 function mobileScrollAnim() {
-    if (window.innerWidth <= 700) {
-        const cards = document.querySelectorAll('.category-card');
-        let direction = window.scrollY > lastMobileScrollY ? 'down' : 'up';
-        cards.forEach(card => {
-            card.classList.remove('mobile-scroll-down', 'mobile-scroll-up');
-            const rect = card.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                if (direction === 'down') {
-                    card.classList.add('mobile-scroll-down');
-                } else {
-                    card.classList.add('mobile-scroll-up');
-                }
-                setTimeout(() => {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            if (window.innerWidth <= 700) {
+                const cards = document.querySelectorAll('.category-card');
+                let direction = window.scrollY > lastMobileScrollY ? 'down' : 'up';
+                cards.forEach(card => {
                     card.classList.remove('mobile-scroll-down', 'mobile-scroll-up');
-                }, 500);
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        if (direction === 'down') {
+                            card.classList.add('mobile-scroll-down');
+                        } else {
+                            card.classList.add('mobile-scroll-up');
+                        }
+                        setTimeout(() => {
+                            card.classList.remove('mobile-scroll-down', 'mobile-scroll-up');
+                        }, 500);
+                    }
+                });
+                lastMobileScrollY = window.scrollY;
             }
+            ticking = false;
         });
-        lastMobileScrollY = window.scrollY;
+        ticking = true;
     }
 }
 window.addEventListener('scroll', mobileScrollAnim, { passive: true });
