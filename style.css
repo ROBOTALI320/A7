@@ -219,3 +219,34 @@ body::after {
 }
 ::-webkit-scrollbar { width: 10px; background: #101a2a; }
 ::-webkit-scrollbar-thumb { background: linear-gradient(120deg, #00bfff 0%, #002244 100%); border-radius: 8px; }
+
+<!-- filepath: c:\Users\BAWAR CENTER\OneDrive\Desktop\persional\projects\A7\index.html -->
+<script>
+// Mobile scroll up/down animation for category cards
+let lastMobileScrollY = window.scrollY;
+function mobileScrollAnim() {
+    if (window.innerWidth <= 700) {
+        const cards = document.querySelectorAll('.category-card');
+        let direction = window.scrollY > lastMobileScrollY ? 'down' : 'up';
+        cards.forEach(card => {
+            card.classList.remove('mobile-scroll-down', 'mobile-scroll-up');
+            // Only animate if visible in viewport
+            const rect = card.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                if (direction === 'down') {
+                    card.classList.add('mobile-scroll-down');
+                } else {
+                    card.classList.add('mobile-scroll-up');
+                }
+                // Remove animation class after animation ends
+                setTimeout(() => {
+                    card.classList.remove('mobile-scroll-down', 'mobile-scroll-up');
+                }, 500);
+            }
+        });
+        lastMobileScrollY = window.scrollY;
+    }
+}
+window.addEventListener('scroll', mobileScrollAnim, { passive: true });
+window.addEventListener('resize', () => { lastMobileScrollY = window.scrollY; });
+</script>
