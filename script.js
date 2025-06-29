@@ -1,11 +1,7 @@
 // script.js
-// Add your JavaScript code here to improve performance or interactivity.
-
-console.log('JavaScript is loaded and ready!');
 
 // Optimize DOMContentLoaded for faster rendering
 window.addEventListener('DOMContentLoaded', function() {
-    // Defer image loading (if any)
     const images = document.querySelectorAll('img[data-src]');
     const loadImg = (img) => {
         img.src = img.getAttribute('data-src');
