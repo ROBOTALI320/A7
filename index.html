@@ -9,164 +9,188 @@
     <link rel="stylesheet" href="style.css">
     <style>
     /* ...existing code... */
-    .category-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1000;
-        background: rgba(20,20,20,0.97);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        overflow-y: auto;
-    }
-    .category-overlay.active {
-        display: flex !important;
-    }
-    .overlay-content {
-        background: var(--background, #181818);
-        color: var(--text, #fff);
-        border-radius: 16px;
-        max-width: 600px;
-        width: 90vw;
-        max-height: 90vh;
-        overflow-y: auto;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        padding: 2rem 1.5rem 1.5rem 1.5rem;
-        position: relative;
-        margin: auto;
-    }
-    .close-overlay {
-        position: absolute;
-        top: 1rem;
-        right: 1.2rem;
-        font-size: 2rem;
-        color: #ff5e5e;
-        cursor: pointer;
-        z-index: 10;
-    }
-    .tool-card {
-        background: #23272f;
-        border-radius: 12px;
-        margin: 1rem 0;
-        padding: 1.2rem 1rem 1rem 1rem;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    .category-card {
+        /* Transparent glassmorphism style for mobile */
+        background: rgba(20, 30, 40, 0.35);
+        border-radius: 24px;
+        border: 2.5px solid rgba(0,255,136,0.25);
+        box-shadow: 0 8px 32px 0 rgba(0,255,136,0.13), 0 1.5px 8px 0 rgba(0,207,255,0.10);
+        backdrop-filter: blur(18px) saturate(1.2);
+        -webkit-backdrop-filter: blur(18px) saturate(1.2);
+        min-width: 90vw;
+        max-width: 98vw;
+        min-height: 110px;
+        margin: 0.7rem auto;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        transition: box-shadow 0.2s, transform 0.2s;
-        border: 1px solid #2e3440;
-        position: relative;
-    }
-    .tool-card strong {
-        font-size: 1.1rem;
-        color: #00ff88;
-    }
-    .tool-card a {
-        text-decoration: none;
-        color: #00ff88;
-        font-weight: bold;
-        margin-bottom: 0.3rem;
-        transition: color 0.2s;
-    }
-    .tool-card a:hover {
-        color: #00e676;
-        text-decoration: underline;
-    }
-    .tool-card div {
-        color: #cfd8dc;
-        margin-bottom: 0.7rem;
-    }
-    .tool-card .visit-btn {
-        margin-top: 0.5rem;
-        background: linear-gradient(90deg,#00ff88 0%,#00cfff 100%);
-        color: #181818;
-        border: none;
-        border-radius: 8px;
-        padding: 0.4rem 1.1rem;
-        font-weight: bold;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background 0.2s, color 0.2s;
-        box-shadow: 0 1px 6px rgba(0,0,0,0.08);
-    }
-    .tool-card .visit-btn:hover {
-        background: linear-gradient(90deg,#00cfff 0%,#00ff88 100%);
-        color: #181818;
-    }
-    #toolsList {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.2rem;
+        align-items: center;
         justify-content: center;
-        align-items: stretch;
+        gap: 0.5rem;
+        text-align: center;
+        transition: box-shadow 0.2s, border 0.2s, background 0.2s, transform 0.2s;
+        opacity: 0.96;
     }
-    .tool-card {
-        width: 270px;
-        min-height: 120px;
+    .category-card .cat-emoji {
+        font-size: 2.3rem;
+        margin-bottom: 0.2rem;
+        filter: drop-shadow(0 2px 12px #00ff8899);
+        animation: emojiGlowMobile 2.5s infinite alternate cubic-bezier(.33,1.02,.54,.99);
+    }
+    @keyframes emojiGlowMobile {
+        0% { filter: drop-shadow(0 0 0 #00ff88); }
+        100% { filter: drop-shadow(0 0 18px #00ff88); }
+    }
+    .category-card .cat-title {
+        font-size: 1.1rem;
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: 1.2px;
         margin: 0;
+        padding: 0;
+        text-shadow: 0 2px 10px #00ff8899;
+        font-family: 'Orbitron', sans-serif;
     }
+    .category-card:active, .category-card:focus, .category-card:hover {
+        background: rgba(0,255,136,0.10);
+        border-color: #00cfff;
+        box-shadow: 0 8px 32px 0 rgba(0,255,136,0.22), 0 2px 12px 0 rgba(0,207,255,0.18);
+        transform: scale(1.03) rotate(-1deg);
+        opacity: 1;
+    }
+    /* Responsive for mobile only */
     @media (max-width: 700px) {
-        .overlay-content {
+        body {
+            background: linear-gradient(135deg, #050914 0%, #0a1a2f 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .categories-list {
+            flex-direction: column;
+            gap: 0.7rem;
+            align-items: center;
+            margin: 0;
+            padding: 0.5rem 0 1.5rem 0;
+        }
+        .category-card {
+            min-width: 92vw;
             max-width: 98vw;
             padding: 1.2rem 0.5rem 1rem 0.5rem;
         }
-        #toolsList {
-            flex-direction: column;
-            gap: 0.7rem;
-            align-items: stretch;
+        .category-card .cat-emoji,
+        .category-card .cat-title {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .tool-card {
-            width: 98%;
-            min-width: unset;
+        /* Mobile scroll up/down animation */
+        .category-card.mobile-scroll-down {
+            animation: mobileScrollDown 0.5s;
         }
-        /* Animation for scroll-down on mobile */
-        body.scrolled-down .logo {
-            animation: logoPop 0.5s;
+        .category-card.mobile-scroll-up {
+            animation: mobileScrollUp 0.5s;
         }
-        @keyframes logoPop {
-            0% { transform: scale(1) rotate(0deg);}
-            30% { transform: scale(1.08) rotate(-2deg);}
-            60% { transform: scale(0.97) rotate(1deg);}
-            100% { transform: scale(1) rotate(0deg);}
+        @keyframes mobileScrollDown {
+            0% { opacity: 0.7; transform: translateY(-40px) scale(0.97);}
+            80% { opacity: 1; transform: translateY(8px) scale(1.04);}
+            100% { opacity: 1; transform: translateY(0) scale(1);}
         }
-        body.scrolled-down .category-card,
-        body.scrolled-down .tool-card {
-            animation: cardFadeIn 0.6s;
+        @keyframes mobileScrollUp {
+            0% { opacity: 0.7; transform: translateY(40px) scale(0.97);}
+            80% { opacity: 1; transform: translateY(-8px) scale(1.04);}
+            100% { opacity: 1; transform: translateY(0) scale(1);}
         }
-        @keyframes cardFadeIn {
-            0% { opacity: 0; transform: translateY(30px);}
-            100% { opacity: 1; transform: translateY(0);}
-        }
+        /* Hide scrollbars for mobile */
+        ::-webkit-scrollbar { width: 0 !important; background: transparent !important; }
+        body::-webkit-scrollbar { width: 0 !important; background: transparent !important; }
     }
+    /* Animated background for mobile */
+    body {
+        position: relative;
+        overflow-x: hidden;
+    }
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.18;
+        background: repeating-linear-gradient(120deg, #00ff88 0 2px, transparent 2px 40px),
+                    repeating-linear-gradient(60deg, #00cfff 0 2px, transparent 2px 40px),
+                    linear-gradient(135deg, #050914 0%, #0a1a2f 100%);
+        animation: bgMoveMobile 12s linear infinite alternate;
+    }
+    @keyframes bgMoveMobile {
+        0% { background-position: 0 0, 0 0, 0 0; }
+        100% { background-position: 120px 120px, 80px 80px, 0 0; }
+    }
+    /* Replace ALPHA7 box with a glowing neon underline text effect */
     .logo {
         font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
-        font-size: 2.2rem;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        color: #00ff88;
-        background: linear-gradient(90deg, #00ff88 10%, #00cfff 90%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-fill-color: transparent;
-        padding: 0.3rem 1.5rem;
-        border-radius: 18px;
-        box-shadow: 0 4px 24px 0 rgba(0,255,136,0.13), 0 1.5px 8px 0 rgba(0,207,255,0.10);
-        border: 2px solid #00ff88;
+        font-size: 2.7rem;
+        font-weight: 900;
+        letter-spacing: 0.18em;
+        color: #fff;
+        background: none;
+        border: none;
+        border-radius: 0;
+        padding: 0.6rem 0 0.2rem 0;
+        margin-bottom: 2.2rem;
+        margin-top: 1.2rem;
         display: inline-block;
-        margin: 0.5rem 0 0.5rem 0;
-        transition: box-shadow 0.2s, border 0.2s;
-        background-color: rgba(0,255,136,0.07);
+        position: relative;
+        overflow: visible;
+        text-shadow:
+            0 2px 24px #00ff8899,
+            0 0 12px #00cfff99,
+            0 0 2px #fff;
+        transition: color 0.3s;
     }
-    .logo:hover {
-        box-shadow: 0 6px 32px 0 rgba(0,255,136,0.22), 0 2px 12px 0 rgba(0,207,255,0.18);
-        border: 2.5px solid #00cfff;
-        background-color: rgba(0,207,255,0.13);
-        cursor: pointer;
+    .logo::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0; right: 0; bottom: -8px;
+        height: 7px;
+        border-radius: 8px;
+        background: linear-gradient(90deg, #00ff88 0%, #00cfff 50%, #ff5efc 100%);
+        box-shadow: 0 0 24px 6px #00ff8899, 0 0 32px 8px #ff5efc44;
+        opacity: 0.85;
+        animation: logoUnderlineGlow 2.5s infinite alternate;
+        z-index: 1;
     }
+    @keyframes logoUnderlineGlow {
+        0% { filter: blur(2px) brightness(1.1);}
+        100% { filter: blur(6px) brightness(1.5);}
+    }
+    .logo:hover, .logo:focus {
+        color: #ff5efc;
+        text-shadow:
+            0 2px 32px #ff5efcbb,
+            0 0 18px #00cfffcc,
+            0 0 2px #fff;
+    }
+    .logo::before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 50%; top: 100%;
+        width: 60px; height: 60px;
+        transform: translate(-50%, 0);
+        border-radius: 50%;
+        background: radial-gradient(circle, #00ff88 0%, #00cfff 60%, #ff5efc 100%, transparent 100%);
+        opacity: 0.18;
+        filter: blur(12px);
+        z-index: 0;
+        pointer-events: none;
+        animation: logoPulseCircle 3.5s infinite alternate;
+    }
+    @keyframes logoPulseCircle {
+        0% { opacity: 0.13; transform: translate(-50%, 0) scale(1);}
+        100% { opacity: 0.28; transform: translate(-50%, 0) scale(1.18);}
+    }
+    /* ...existing code... */
     </style>
 </head>
 <body>
@@ -734,6 +758,34 @@
     }
     window.addEventListener('scroll', handleMobileScrollAnim);
     window.addEventListener('resize', handleMobileScrollAnim);
+
+    // Mobile scroll up/down animation for category cards
+    let lastMobileScrollY = window.scrollY;
+    function mobileScrollAnim() {
+        if (window.innerWidth <= 700) {
+            const cards = document.querySelectorAll('.category-card');
+            let direction = window.scrollY > lastMobileScrollY ? 'down' : 'up';
+            cards.forEach(card => {
+                card.classList.remove('mobile-scroll-down', 'mobile-scroll-up');
+                // Only animate if visible in viewport
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    if (direction === 'down') {
+                        card.classList.add('mobile-scroll-down');
+                    } else {
+                        card.classList.add('mobile-scroll-up');
+                    }
+                    // Remove animation class after animation ends
+                    setTimeout(() => {
+                        card.classList.remove('mobile-scroll-down', 'mobile-scroll-up');
+                    }, 500);
+                }
+            });
+            lastMobileScrollY = window.scrollY;
+        }
+    }
+    window.addEventListener('scroll', mobileScrollAnim, { passive: true });
+    window.addEventListener('resize', () => { lastMobileScrollY = window.scrollY; });
     </script>
 </body>
 </html>
