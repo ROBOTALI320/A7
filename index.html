@@ -7,56 +7,211 @@
     <meta name="description" content="باشترین ئامێرێن زیرەک و دەستکردی بۆ هەموو کەسێک">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+    /* ...existing code... */
+    .category-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1000;
+        background: rgba(20,20,20,0.97);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+    }
+    .category-overlay.active {
+        display: flex !important;
+    }
+    .overlay-content {
+        background: var(--background, #181818);
+        color: var(--text, #fff);
+        border-radius: 16px;
+        max-width: 600px;
+        width: 90vw;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        position: relative;
+        margin: auto;
+    }
+    .close-overlay {
+        position: absolute;
+        top: 1rem;
+        right: 1.2rem;
+        font-size: 2rem;
+        color: #ff5e5e;
+        cursor: pointer;
+        z-index: 10;
+    }
+    .tool-card {
+        background: #23272f;
+        border-radius: 12px;
+        margin: 1rem 0;
+        padding: 1.2rem 1rem 1rem 1rem;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        transition: box-shadow 0.2s, transform 0.2s;
+        border: 1px solid #2e3440;
+        position: relative;
+    }
+    .tool-card strong {
+        font-size: 1.1rem;
+        color: #00ff88;
+    }
+    .tool-card a {
+        text-decoration: none;
+        color: #00ff88;
+        font-weight: bold;
+        margin-bottom: 0.3rem;
+        transition: color 0.2s;
+    }
+    .tool-card a:hover {
+        color: #00e676;
+        text-decoration: underline;
+    }
+    .tool-card div {
+        color: #cfd8dc;
+        margin-bottom: 0.7rem;
+    }
+    .tool-card .visit-btn {
+        margin-top: 0.5rem;
+        background: linear-gradient(90deg,#00ff88 0%,#00cfff 100%);
+        color: #181818;
+        border: none;
+        border-radius: 8px;
+        padding: 0.4rem 1.1rem;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    }
+    .tool-card .visit-btn:hover {
+        background: linear-gradient(90deg,#00cfff 0%,#00ff88 100%);
+        color: #181818;
+    }
+    #toolsList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.2rem;
+        justify-content: center;
+        align-items: stretch;
+    }
+    .tool-card {
+        width: 270px;
+        min-height: 120px;
+        margin: 0;
+    }
+    @media (max-width: 700px) {
+        .overlay-content {
+            max-width: 98vw;
+            padding: 1.2rem 0.5rem 1rem 0.5rem;
+        }
+        #toolsList {
+            flex-direction: column;
+            gap: 0.7rem;
+            align-items: stretch;
+        }
+        .tool-card {
+            width: 98%;
+            min-width: unset;
+        }
+        /* Animation for scroll-down on mobile */
+        body.scrolled-down .logo {
+            animation: logoPop 0.5s;
+        }
+        @keyframes logoPop {
+            0% { transform: scale(1) rotate(0deg);}
+            30% { transform: scale(1.08) rotate(-2deg);}
+            60% { transform: scale(0.97) rotate(1deg);}
+            100% { transform: scale(1) rotate(0deg);}
+        }
+        body.scrolled-down .category-card,
+        body.scrolled-down .tool-card {
+            animation: cardFadeIn 0.6s;
+        }
+        @keyframes cardFadeIn {
+            0% { opacity: 0; transform: translateY(30px);}
+            100% { opacity: 1; transform: translateY(0);}
+        }
+    }
+    .logo {
+        font-family: 'Orbitron', 'Segoe UI', Arial, sans-serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: #00ff88;
+        background: linear-gradient(90deg, #00ff88 10%, #00cfff 90%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        padding: 0.3rem 1.5rem;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px 0 rgba(0,255,136,0.13), 0 1.5px 8px 0 rgba(0,207,255,0.10);
+        border: 2px solid #00ff88;
+        display: inline-block;
+        margin: 0.5rem 0 0.5rem 0;
+        transition: box-shadow 0.2s, border 0.2s;
+        background-color: rgba(0,255,136,0.07);
+    }
+    .logo:hover {
+        box-shadow: 0 6px 32px 0 rgba(0,255,136,0.22), 0 2px 12px 0 rgba(0,207,255,0.18);
+        border: 2.5px solid #00cfff;
+        background-color: rgba(0,207,255,0.13);
+        cursor: pointer;
+    }
+    </style>
 </head>
 <body>
-    <div id="app-root">
-        <header class="main-header">
-            <div class="logo-area">
-                <span class="logo">A7</span>
-                <span class="site-title">ALPHA7.AI</span>
+    <!-- Entrance Overlay -->
+    <div id="entranceOverlay" aria-label="Welcome overlay" tabindex="0">
+        <div class="entrance-container animated">
+            <div class="entrance-logo">A7</div>
+            <div class="entrance-title">Welcome to ALPHA7.AI</div>
+            <div class="entrance-desc">
+                <span style="color:#00ff88;font-weight:bold;">Discover the best smart and creative tools for everyone!</span>
             </div>
-            <nav class="topbar-nav">
-                <input type="text" id="searchInput" placeholder="گەڕان بکە..." aria-label="Search tools">
-                <button id="randomToolBtn" title="Random Tool" aria-label="Random Tool">🎲</button>
-                <button id="favoritesBtn" title="Favorites" aria-label="Favorites"><i class="fas fa-star"></i></button>
-                <button id="suggestToolBtn" title="Suggest a Tool" aria-label="Suggest a Tool"><i class="fas fa-plus"></i></button>
-                <select id="langSwitcher" aria-label="Language Switcher">
-                    <option value="ku-bd">کوردی</option>
-                    <option value="en">English</option>
-                </select>
-                <button id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
-            </nav>
-        </header>
-        <div class="main-layout">
-            <aside class="sidebar" id="sidebar">
-                <ul id="categoryList" aria-label="Categories"></ul>
-            </aside>
-            <main class="main-content">
-                <section id="featuredSection" aria-label="Featured Tools"></section>
-                <section id="favoritesSection" aria-label="Favorite Tools" style="display:none;"></section>
-                <section id="categoriesSection" aria-label="Categories"></section>
-            </main>
+            <a class="entrance-btn" href="#" id="entranceBtn">چوونە ناڤ</a>
+        </div>
+        <div class="entrance-footer">Empowering your digital journey 🚀</div>
+    </div>
+    <nav aria-label="Main navigation">
+        <div class="logo">ALPHA7</div>
+        <button id="themeToggle" aria-label="گۆڕینی ڕووناکی/تاریکی" style="background:none;border:none;cursor:pointer;font-size:1.3rem;">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+    <main>
+        <div class="categories-list" id="categoriesList">
+            <!-- Category cards will be rendered here by JS -->
+        </div>
+    </main>
+    <!-- Category Overlay (dynamic) -->
+    <div id="categoryOverlay" class="category-overlay" style="display:none;">
+        <div class="overlay-content">
+            <span class="close-overlay" id="closeCategoryOverlay" tabindex="0" aria-label="داخستن">&times;</span>
+            <h2 id="overlayTitle"></h2>
+            <div id="toolsList"></div>
         </div>
     </div>
-    <footer class="main-footer">
-        <div class="footer-social">
-            <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        </div>
-        <p class="footer-copy">© 2025 ALPHA7.AI. All rights reserved.</p>
-    </footer>
-    <!-- Tool Overlay Modal -->
-    <div id="toolOverlay" class="modal-overlay" style="display:none;"></div>
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner"><div class="spinner"></div></div>
+    <!-- Scroll-to-top Button -->
+    <button id="scrollTopBtn" title="بچە سەرڤە" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
     <!-- Suggest Tool Modal -->
-    <div id="suggestToolModal" class="modal-overlay" style="display:none;">
+    <div id="suggestToolModal" class="modal" style="display:none;" aria-modal="true" role="dialog" aria-label="Suggest a Tool">
         <div class="modal-content">
             <span class="close-modal" id="closeSuggestModal" tabindex="0" aria-label="Close suggest tool modal">&times;</span>
-            <h2>پیشنیا ئامێرێکی نوێ</h2>
+            <h2>Suggest a New Tool</h2>
             <form id="suggestToolForm">
-                <label for="toolName">Name:</label>
+                <label for="toolName">Tool Name:</label>
                 <input type="text" id="toolName" name="toolName" required>
                 <label for="toolDesc">Description:</label>
                 <input type="text" id="toolDesc" name="toolDesc" required>
@@ -69,8 +224,516 @@
             <div id="suggestSuccess" style="display:none;color:green;margin-top:1rem;">Thank you for your suggestion!</div>
         </div>
     </div>
-    <div id="loadingSpinner"><div class="spinner"></div></div>
-    <button id="scrollTopBtn" title="بچە سەرڤە" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></button>
-    <script src="main.js"></script>
+    <footer>
+        <div class="social-links">
+            <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p style="color: var(--text-secondary); margin-top: 1rem;">created by :ALI</p>
+    </footer>
+    <script>
+    // DATA
+    const categories = [
+    {
+        title: '🤖 چاتبووتێن زیرەک',
+        tools: [
+            { name: 'ChatGPT', desc: 'چاتبووتی زانای OpenAI بۆ پرسیار و وەڵام', url: 'https://chat.openai.com' },
+            { name: 'Google Bard', desc: 'چاتبووتی گووگڵ بۆ زانست و وەڵامدان', url: 'https://bard.google.com' },
+            { name: 'Microsoft Copilot', desc: 'یارمەتی‌دەر و چاتبووتی مایکروسۆفت', url: 'https://www.microsoft.com/copilot' },
+            { name: 'Claude', desc: 'چاتبووتی زانای Anthropic بۆ وتار و وەڵام', url: 'https://claude.ai' },
+            { name: 'Gemini', desc: 'چاتبووتی گووگڵ بۆ زانست و چاوپێکەوتن', url: 'https://gemini.google.com' },
+            { name: 'DeepSeek', desc: 'چاتبووتی DeepSeek بۆ زانست و گەڕان', url: 'https://chat.deepseek.com' },
+            { name: 'Manus', desc: 'چاتبووتی تایبەتی Manus بۆ یارمەتی', url: 'https://manus.ai' },
+            { name: 'ChatSonic', desc: 'چاتبووتی نوێ بۆ نوسین و وەڵامدان', url: 'https://writesonic.com/chat' },
+            { name: 'Jasper', desc: 'چاتبووتی مارکێتینگ و نوسین بۆ کۆمپانیاکان', url: 'https://www.jasper.ai' },
+            { name: 'Copy.ai', desc: 'چاتبووتی تایبەتی بۆ دروستکردنی کۆپی', url: 'https://www.copy.ai' },
+            { name: 'Rytr', desc: 'چاتبووتی نوسین بۆ هەموو جۆرێک', url: 'https://rytr.me' },
+            { name: 'Wordtune', desc: 'یارمەتی بۆ گۆڕینی و پەرەپێدانی وتار', url: 'https://www.wordtune.com' },
+            { name: 'Quillbot', desc: 'چاتبووتی پارافڕێزکردن و گۆڕینی جوملە', url: 'https://quillbot.com' },
+            { name: 'INK Editor', desc: 'ئامێری نوسین و سەرجەمکردنی وتار', url: 'https://inkforall.com' },
+            { name: 'Text Blaze', desc: 'دروستکردنی شابلۆن و نوسینی خێرا', url: 'https://blaze.today' },
+            { name: 'Anyword', desc: 'نوسینی تایبەتی بۆ مارکێتینگ و پەیام', url: 'https://anyword.com' },
+            { name: 'Writesonic', desc: 'دروستکردنی نوسین و چاتبووتی تایبەتی', url: 'https://writesonic.com' },
+            { name: 'Snazzy AI', desc: 'چاتبووتی نوسین بۆ پەیام و مارکێتینگ', url: 'https://snazzy.ai' },
+            { name: 'AI Dungeon', desc: 'یاری چاتبووتی بۆ دروستکردنی چیرۆک', url: 'https://play.aidungeon.io' },
+            { name: 'Poe', desc: 'پلاتفۆرمی چاتبووتی جۆراوجۆر', url: 'https://poe.com' },
+            { name: 'Character AI', desc: 'چاتبووتی دروستکردنی کاراکتەر و گفتوگۆ', url: 'https://character.ai' },
+            { name: 'Replika', desc: 'چاتبووتی هاوڕێ و یارمەتی روانی', url: 'https://replika.ai' },
+            { name: 'AI Picasso', desc: 'دروستکردنی وێنە بە هوشە مصنوعی', url: 'https://aipicasso.com' },
+            { name: 'DeepAI', desc: 'پلاتفۆرمی وێنەسازی و زانست', url: 'https://deepai.org' },
+            { name: 'NightCafe', desc: 'دروستکردنی وێنە و هونەر بە AI', url: 'https://nightcafe.studio' },
+            { name: 'Artbreeder', desc: 'گۆڕینی و دروستکردنی وێنە بە AI', url: 'https://www.artbreeder.com' },
+            { name: 'Runway ML', desc: 'پلاتفۆرمی وێنە و ڤیدیۆی AI', url: 'https://runwayml.com' },
+            { name: 'Craiyon', desc: 'دروستکردنی وێنە بە دەستکاری AI', url: 'https://www.craiyon.com' },
+            { name: 'StarryAI', desc: 'دروستکردنی وێنە و هونەر بە زانایەتی', url: 'https://starryai.com' },
+            { name: 'Deep Dream Generator', desc: 'دروستکردنی وێنەی خەیاڵی بە AI', url: 'https://deepdreamgenerator.com' },
+            { name: 'Photosonic', desc: 'دروستکردنی وێنە و گۆڕینی وێنە', url: 'https://photosonic.ai' },
+            { name: 'PaintsChainer', desc: 'وێنەسازی بە شێوازی کاریکاتور', url: 'https://paintschainer.preferred.tech' },
+            { name: 'AI Gahaku', desc: 'دروستکردنی پۆرترێت بە شێوازی هونەری', url: 'https://ai-art.tokyo/en/' },
+            { name: 'AI Painter', desc: 'وێنەسازی و هونەر بە هوشە مصنوعی', url: 'https://www.aipainter.ai' },
+            { name: 'AI Art Generator', desc: 'دروستکردنی هونەر و وێنەی نوێ', url: 'https://www.artificial-intelligence.art' },
+            { name: 'Botpress', desc: 'پلاتفۆرمی دروستکردنی چاتبووتی تایبەتی', url: 'https://botpress.com' },
+            { name: 'ManyChat', desc: 'چاتبووتی مارکێتینگ بۆ فەیسبووک و واتساپ', url: 'https://manychat.com' },
+            { name: 'Tidio', desc: 'چاتبووتی پشتگیری و بازرگانی', url: 'https://www.tidio.com' },
+            { name: 'MobileMonkey', desc: 'چاتبووتی مارکێتینگ بۆ فەیسبووک', url: 'https://mobilemonkey.com' },
+            { name: 'Chatfuel', desc: 'دروستکردنی چاتبووت بێ کۆد', url: 'https://chatfuel.com' },
+            { name: 'Pandorabots', desc: 'پلاتفۆرمی چاتبووتی زانایەتی', url: 'https://www.pandorabots.com' },
+            { name: 'Flow XO', desc: 'دروستکردنی چاتبووت بۆ وێبسایت و مەسجەر', url: 'https://flowxo.com' },
+            { name: 'Landbot', desc: 'چاتبووتی وێبسایت بە ڕووکارێ کشان و دابەزاندن', url: 'https://landbot.io' }
+        ]
+    },
+    {
+        title: '🎬 ڤیدیۆ و ئەنیمەیشن',
+        tools: [
+            { name: 'Adobe Premiere Pro', desc: 'ئامێری گۆڕینی ڤیدیۆی پیشەیی', url: 'https://www.adobe.com/products/premiere.html' },
+            { name: 'Final Cut Pro', desc: 'گۆڕینی ڤیدیۆی پیشەیی بۆ ماک', url: 'https://www.apple.com/final-cut-pro/' },
+            { name: 'Adobe After Effects', desc: 'دروستکردنی ئەنیمەیشن و ئافێکت', url: 'https://www.adobe.com/products/aftereffects.html' },
+            { name: 'DaVinci Resolve', desc: 'گۆڕینی ڤیدیۆ و ڕەنگکردن', url: 'https://www.blackmagicdesign.com/products/davinciresolve/' },
+            { name: 'HitFilm Express', desc: 'گۆڕینی ڤیدیۆ و ئافێکتەکان', url: 'https://fxhome.com/product/hitfilm-express' },
+            { name: 'Blender', desc: 'دروستکردنی 3D و ئەنیمەیشن', url: 'https://www.blender.org' },
+            { name: 'OpenShot', desc: 'گۆڕینی ڤیدیۆی فری و ئاسان', url: 'https://www.openshot.org' },
+            { name: 'Shotcut', desc: 'گۆڕینی ڤیدیۆی فری و کراو', url: 'https://shotcut.org' },
+            { name: 'VSDC Free Video Editor', desc: 'گۆڕینی ڤیدیۆی فری بۆ وین', url: 'http://www.videosoftdev.com/free-video-editor' },
+            { name: 'Avidemux', desc: 'ئامێری کراوی بۆ گۆڕینی ڤیدیۆ', url: 'http://avidemux.sourceforge.net' },
+            { name: 'VideoPad', desc: 'گۆڕینی ڤیدیۆی ئاسان و فەرمی', url: 'https://www.nchsoftware.com/videopad/index.html' },
+            { name: 'Lightworks', desc: 'ئامێری گۆڕینی ڤیدیۆی پیشەیی', url: 'https://www.lwks.com' },
+            { name: 'CamStudio', desc: 'تۆمارکردنی ڤیدیۆی سکرین', url: 'http://camstudio.org' },
+            { name: 'ScreenFlow', desc: 'تۆمارکردنی سکرین و گۆڕینی ڤیدیۆ', url: 'https://www.telestream.net/screenflow/' },
+            { name: 'iMovie', desc: 'گۆڕینی ڤیدیۆی ئاسان بۆ Apple', url: 'https://www.apple.com/imovie/' },
+            { name: 'VideoLAN Movie Creator', desc: 'دروستکردنی ڤیدیۆی فری', url: 'https://www.videolan.org/vlmc/' },
+            { name: 'Kapwing', desc: 'گۆڕینی ڤیدیۆی ئۆنلاین و ئاسان', url: 'https://www.kapwing.com' },
+            { name: 'WeVideo', desc: 'گۆڕینی ڤیدیۆی ئۆنلاین', url: 'https://www.wevideo.com' },
+            { name: 'FlexClip', desc: 'دروستکردنی ڤیدیۆی فری و ئاسان', url: 'https://www.flexclip.com' },
+            { name: 'Animaker', desc: 'دروستکردنی ئەنیمەیشن بۆ ڤیدیۆ', url: 'https://www.animaker.com' },
+            { name: 'Renderforest', desc: 'دروستکردنی ڤیدیۆ و لوگۆ', url: 'https://www.renderforest.com' },
+            { name: 'Powtoon', desc: 'دروستکردنی ئەنیمەیشن و پرزنتەیشن', url: 'https://www.powtoon.com' },
+            { name: 'Moovly', desc: 'دروستکردنی ڤیدیۆ و ئەنیمەیشن', url: 'https://www.moovly.com' },
+            { name: 'Veed.io', desc: 'گۆڕینی ڤیدیۆی ئۆنلاین و فەرمی', url: 'https://www.veed.io' },
+            { name: 'Wave.video', desc: 'دروستکردنی ڤیدیۆی مارکێتینگ', url: 'https://wave.video' },
+            { name: 'InVideo', desc: 'دروستکردنی ڤیدیۆی فری و مارکێتینگ', url: 'https://invideo.io' },
+            { name: 'Vidnami', desc: 'دروستکردنی ڤیدیۆی مارکێتینگ', url: 'https://www.vidnami.com' },
+            { name: 'Clipchamp', desc: 'گۆڕینی ڤیدیۆی فری بۆ وین', url: 'https://clipchamp.com/en/video-editor' },
+            { name: 'Splice', desc: 'گۆڕینی ڤیدیۆی موبایل', url: 'https://spliceapp.com' },
+            { name: 'Quik', desc: 'گۆڕینی ڤیدیۆی خێرا بۆ موبایل', url: 'https://quik.gopro.com' },
+            { name: 'Magisto', desc: 'دروستکردنی ڤیدیۆی ئاسان بۆ موبایل', url: 'https://www.magisto.com' },
+            { name: 'FilmoraGo', desc: 'گۆڕینی ڤیدیۆی موبایل و فەرمی', url: 'https://filmorago.wondershare.com' },
+            { name: 'PowerDirector', desc: 'گۆڕینی ڤیدیۆی موبایل بۆ Android', url: 'https://www.cyberlink.com/products/powerdirector-mobile/overview_en_US.html' },
+            { name: 'KineMaster', desc: 'گۆڕینی ڤیدیۆی موبایل بۆ هەموو سیستەمێک', url: 'https://www.kinemaster.com' },
+            { name: 'VivaVideo', desc: 'دروستکردنی ڤیدیۆی موبایل', url: 'https://www.vivavideo.tv' },
+            { name: 'VideoShow', desc: 'گۆڕینی ڤیدیۆی موبایل و ئاسان', url: 'https://videoshowapp.com' },
+            { name: 'Funimate', desc: 'دروستکردنی ئەنیمەیشن بۆ ڤیدیۆی موبایل', url: 'https://www.funimate.com' },
+            { name: 'Alight Motion', desc: 'دروستکردنی موڤی و ئەنیمەیشن بۆ موبایل', url: 'https://alightmotion.com' },
+            { name: 'Pixaloop', desc: 'وێنەی موڤی بۆ موبایل', url: 'https://pixaloop.en.softonic.com' },
+            { name: 'GIF Maker', desc: 'دروستکردنی GIF بۆ ڤیدیۆ و وێنە', url: 'https://gifmaker.me' },
+        ]
+    },
+    {
+        title: '🌐 وەرگێران',
+        tools: [
+            { name: 'Google Translate', desc: 'وەرگێڕا گووگڵ', url: 'https://translate.google.com' },
+            { name: 'DeepL Translator', desc: 'وەرگێڕا هونەری', url: 'https://www.deepl.com' },
+            { name: 'Microsoft Translator', desc: 'وەرگێڕا مایکرۆسۆفت', url: 'https://www.bing.com/translator' },
+            { name: 'iTranslate', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.itranslate.com' },
+            { name: 'Reverso Context', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.reverso.net/text_translation.aspx?lang=EN' },
+            { name: 'SYSTRAN Translate', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.systransoft.com' },
+            { name: 'LingvaNex', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://lingvanex.com' },
+            { name: 'Translate.com', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.translate.com' },
+            { name: 'Online Translator', desc: 'وەرگێڕا ئۆنلاین', url: 'https://www.onlinetranslator.com' },
+            { name: 'FreeTranslation.com', desc: 'وەرگێڕا بێ بەرامبەر و فەرمی', url: 'https://www.freetranslation.com' },
+            { name: 'Babylon Translator', desc: 'وەرگێڕا بابلۆن', url: 'https://www.babylon-software.com' },
+            { name: 'WordReference', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.wordreference.com' },
+            { name: 'Collins Dictionary', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.collinsdictionary.com/translator' },
+            { name: 'Oxford Languages', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://languages.oup.com/oxford-english-dictionary/translate' },
+            { name: 'Cambridge Dictionary', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://dictionary.cambridge.org/translator' },
+            { name: 'Macmillan Dictionary', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.macmillandictionary.com/translator' },
+            { name: 'Longman Dictionary', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.longmandictionary.com/translator' },
+            { name: 'American Heritage Dictionary', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://ahdictionary.com' },
+            { name: 'Chambers Dictionary', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://chambers.co.uk/translator' },
+            { name: 'Chichewa Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.chichewatranslator.com' },
+            { name: 'Chinese Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.chinesetranslator.com' },
+            { name: 'Japanese Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.japanesetranslator.com' },
+            { name: 'Korean Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.koreantranslator.com' },
+            { name: 'Arabic Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.arabictranslator.com' },
+            { name: 'Russian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.russiantranslator.com' },
+            { name: 'Spanish Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.spanishtranslator.com' },
+            { name: 'French Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.frenchtranslator.com' },
+            { name: 'German Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.germantranslator.com' },
+            { name: 'Italian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.italiantranslator.com' },
+            { name: 'Dutch Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.dutchtranslator.com' },
+            { name: 'Swedish Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.swedishtranslator.com' },
+            { name: 'Norwegian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.norwegianstranslator.com' },
+            { name: 'Finnish Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.finnishtranslator.com' },
+            { name: 'Danish Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.danishtranslator.com' },
+            { name: 'Hebrew Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.hebrewtranslator.com' },
+            { name: 'Thai Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.thaitranslator.com' },
+            { name: 'Vietnamese Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.vietnamesetranslator.com' },
+            { name: 'Indonesian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.indonesiantranslator.com' },
+            { name: 'Filipino Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.filipinotranslator.com' },
+            { name: 'Malay Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.malaytranslator.com' },
+            { name: 'Swahili Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.swahilitranslator.com' },
+            { name: 'Ukrainian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.ukrainiantranslator.com' },
+            { name: 'Romanian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.romaniantranslator.com' },
+            { name: 'Bulgarian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.bulgariantranslator.com' },
+            { name: 'Czech Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.czechtranslator.com' },
+            { name: 'Hungarian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.hungariantranslator.com' },
+            { name: 'Slovak Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.slovaktranslator.com' },
+            { name: 'Slovenian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.sloveniantranslator.com' },
+            { name: 'Estonian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.estoniantranslator.com' },
+            { name: 'Latvian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.latviantranslator.com' },
+            { name: 'Lithuanian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.lithuaniantranslator.com' },
+            { name: 'Armenian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.armeniantranslator.com' },
+            { name: 'Azerbaijani Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.azerbaijantranslator.com' },
+            { name: 'Georgian Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.georgiantranslator.com' },
+            { name: 'Basque Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.basquetranslator.com' },
+            { name: 'Catalan Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.catalantranslator.com' },
+            { name: 'Galician Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.galiciantranslator.com' },
+            { name: 'Welsh Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.welshtranslator.com' },
+            { name: 'Scottish Gaelic Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.scottishgaelictranslator.com' },
+            { name: 'Irish Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.irishttranslator.com' },
+            { name: 'Latin Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.latintranslator.com' },
+            { name: 'Esperanto Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.esperantotranslator.com' },
+            { name: 'Interlingua Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.interlinguatranslator.com' },
+            { name: 'Ido Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.idotranslator.com' },
+            { name: 'Lingua Franca Nova Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.lingua-franca-nova-translator.com' },
+            { name: 'Volapük Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.volapuktranslator.com' },
+            { name: 'Oberlín Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.oberlintranslator.com' },
+            { name: 'Solresol Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.solresoltranslator.com' },
+            { name: "Na'vi Translator", desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.navi-translator.com' },
+            { name: 'Quenya Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.quenya-translator.com' },
+            { name: 'Sindarin Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.sindarin-translator.com' },
+            { name: 'Huttese Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.huttese-translator.com' },
+            { name: 'Shyriiwook Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.shyriiwook-translator.com' },
+            { name: 'Binary Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.binarytranslator.com' },
+            { name: 'Hexadecimal Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.hexadecimaltranslator.com' },
+            { name: 'URL Encoder/Decoder', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.urlencoder.org' },
+            { name: 'Base64 Encoder/Decoder', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.base64decode.net' },
+            { name: 'Markdown Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.markdowntranslator.com' },
+            { name: 'YAML Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.yamltranslator.com' },
+            { name: 'CSV Translator', desc: 'وەرگێڕا بلند و فەرمی', url: 'https://www.csvtranslator.com' },
+        ]
+    },
+    {
+        title: '📚 فێرکاری و خواندن',
+        tools: [
+            // Coding & programming
+            { name: 'Codecademy', desc: 'فێربوونا کۆدکرنێ', url: 'https://www.codecademy.com' },
+            { name: 'freeCodeCamp', desc: 'فێربوونا کۆدکردن و پڕۆژەی فری', url: 'https://www.freecodecamp.org' },
+            { name: 'Khan Academy', desc: 'فێرکاری بۆ هەموو قۆناغێن خواندنێ', url: 'https://www.khanacademy.org' },
+            { name: 'Coursera', desc: 'کۆرس و فێرکاری', url: 'https://www.coursera.org' },
+            { name: 'edX', desc: 'کۆرس و فێرکاری', url: 'https://www.edx.org' },
+            { name: 'Udemy', desc: 'کۆرس و فێرکاری', url: 'https://www.udemy.com' },
+            { name: 'W3Schools', desc: 'فێرکارییا وێب', url: 'https://www.w3schools.com' },
+            { name: 'MDN Web Docs', desc: 'فێرکارییا وێب', url: 'https://developer.mozilla.org' },
+            // Summarize & study tools
+            { name: 'Scholarcy', desc: 'کورتکردنەوەی وتار و پەرتوک', url: 'https://www.scholarcy.com' },
+            { name: 'TLDR This', desc: 'کورتکردنەوەی وتار و ماقالە', url: 'https://tldrthis.com' },
+            { name: 'SMMRY', desc: 'کورتکردنەوەی وتار', url: 'https://smmry.com' },
+            // Medicine & health
+            { name: 'WebMD', desc: 'زانیاریێن پزیشکی', url: 'https://www.webmd.com' },
+            { name: 'Mayo Clinic', desc: 'زانیاریێن پزیشکی', url: 'https://www.mayoclinic.org' },
+            { name: 'Healthline', desc: 'زانیاریێن پزیشکی', url: 'https://www.healthline.com' },
+            { name: 'MedlinePlus', desc: 'زانیاریێن پزیشکی', url: 'https://medlineplus.gov' },
+            { name: 'PubMed', desc: 'زانستا پزیشکی و ڤەکۆلین', url: 'https://pubmed.ncbi.nlm.nih.gov' },
+            // Math & science
+            { name: 'Brilliant', desc: 'فێرکاریێن زانست و بیرکاریێ', url: 'https://brilliant.org' },
+            { name: 'Desmos', desc: 'کرافی بیرکاری و ماتماتیک', url: 'https://www.desmos.com' },
+            { name: 'Wolfram Alpha', desc: 'هەڵگرتنی پرسیارێن زانست و ماتماتیک', url: 'https://www.wolframalpha.com' },
+            { name: 'Symbolab', desc: 'چارسەری پرسیارێن ماتماتیک', url: 'https://www.symbolab.com' },
+            { name: 'GeoGebra', desc: 'ئامێرێن بیرکاری و ماتماتیک', url: 'https://www.geogebra.org' },
+            // General study
+            { name: 'Quizlet', desc: 'فلاشکارد و فێرکاری', url: 'https://quizlet.com' },
+            { name: 'Duolingo', desc: 'فێربوونا زمانان', url: 'https://www.duolingo.com' },
+            { name: 'FutureLearn', desc: 'کۆرس و فێرکاری', url: 'https://www.futurelearn.com' },
+            { name: 'OpenAI Learn', desc: 'فێرکاریێن AI', url: 'https://learn.openai.com' }
+        ]
+    },
+    {
+        title: '📰 هەواڵ و زانیاری',
+        tools: [
+            { name: 'BBC News', desc: 'هەواڵێن جیهانی', url: 'https://www.bbc.com/news' },
+            { name: 'CNN', desc: 'هەواڵێن جیهانی', url: 'https://www.cnn.com' },
+            { name: 'Rudaw', desc: 'هەواڵێن کوردی', url: 'https://www.rudaw.net' },
+            { name: 'Kurdistan24', desc: 'هەواڵێن کوردی', url: 'https://www.kurdistan24.net' },
+            { name: 'Al Jazeera', desc: 'هەواڵێن جیهانی', url: 'https://www.aljazeera.com' },
+            { name: 'Reuters', desc: 'هەواڵێن جیهانی', url: 'https://www.reuters.com' },
+            { name: 'VOA Kurdish', desc: 'هەواڵێن کوردی', url: 'https://www.dengiamerika.com' },
+            { name: 'BasNews', desc: 'هەواڵێن کوردی', url: 'https://www.basnews.com' },
+            { name: 'France24', desc: 'هەواڵێن جیهانی', url: 'https://www.france24.com' },
+            { name: 'Sky News', desc: 'هەواڵێن جیهانی', url: 'https://news.sky.com' },
+        ]
+    },
+    {
+        title: '⚕️ تەندروستی و پزیشکی',
+        tools: [
+            { name: 'WebMD', desc: 'زانیاریێن پزیشکی', url: 'https://www.webmd.com' },
+            { name: 'Mayo Clinic', desc: 'زانیاریێن پزیشکی', url: 'https://www.mayoclinic.org' },
+            { name: 'Healthline', desc: 'زانیاریێن پزیشکی', url: 'https://www.healthline.com' },
+            { name: 'MedlinePlus', desc: 'زانیاریێن پزیشکی', url: 'https://medlineplus.gov' },
+            { name: 'WHO', desc: 'رێکخراوا تەندروستی یا جیهانی', url: 'https://www.who.int' },
+            { name: 'PubMed', desc: 'زانستا پزیشکی و ڤەکۆلین', url: 'https://pubmed.ncbi.nlm.nih.gov' },
+            { name: 'Cleveland Clinic', desc: 'زانیاریێن پزیشکی', url: 'https://my.clevelandclinic.org' },
+            { name: 'Drugs.com', desc: 'زانیاریێن دەرمانان', url: 'https://www.drugs.com' },
+            { name: 'NHS', desc: 'زانیاریێن پزیشکی', url: 'https://www.nhs.uk' },
+            { name: 'KidsHealth', desc: 'زانیاریێن پزیشکی بۆ زارۆکان', url: 'https://kidshealth.org' },
+        ]
+    },
+    {
+        title: '💼 کار و بازاڕ',
+        tools: [
+            { name: 'LinkedIn', desc: 'دیتنا کار و پەیوەندی', url: 'https://www.linkedin.com' },
+            { name: 'Glassdoor', desc: 'زانیاریێن بازاڕا کار', url: 'https://www.glassdoor.com' },
+            { name: 'Indeed', desc: 'دیتنا کار', url: 'https://www.indeed.com' },
+            { name: 'Monster', desc: 'دیتنا کار', url: 'https://www.monster.com' },
+            { name: 'Bayt', desc: 'دیتنا کار ل ناڤچەیا عەرەبی', url: 'https://www.bayt.com' },
+            { name: 'Naukri', desc: 'دیتنا کار ل هیندستانێ', url: 'https://www.naukri.com' },
+            { name: 'Upwork', desc: 'کارکرنا فریلانس', url: 'https://www.upwork.com' },
+            { name: 'Fiverr', desc: 'کارکرنا فریلانس', url: 'https://www.fiverr.com' },
+            { name: 'Freelancer', desc: 'کارکرنا فریلانس', url: 'https://www.freelancer.com' },
+            { name: 'Remote OK', desc: 'کارکرنا ژ دوورڤە', url: 'https://remoteok.com' },
+        ]
+    },
+    {
+        title: '🧑‍💻 گەشەپێدانا وێبسایت و بەرنامە',
+        tools: [
+            { name: 'GitHub', desc: 'پلاتفۆرمێ گەشەپێدانێ', url: 'https://github.com' },
+            { name: 'Stack Overflow', desc: 'کۆمەڵگەها گەشەپێدانێ', url: 'https://stackoverflow.com' },
+            { name: 'CodePen', desc: 'تاقیکرنا کۆد', url: 'https://codepen.io' },
+            { name: 'JSFiddle', desc: 'تاقیکرنا کۆد', url: 'https://jsfiddle.net' },
+            { name: 'Glitch', desc: 'دروستکرنا وێبسایت', url: 'https://glitch.com' },
+            { name: 'Netlify', desc: 'بەلاڤکرنا وێبسایت', url: 'https://www.netlify.com' },
+            { name: 'Vercel', desc: 'بەلاڤکرنا وێبسایت', url: 'https://vercel.com' },
+            { name: 'Replit', desc: 'تاقیکرنا کۆد', url: 'https://replit.com' },
+            { name: 'W3Schools', desc: 'فێرکارییا وێب', url: 'https://www.w3schools.com' },
+            { name: 'MDN Web Docs', desc: 'فێرکارییا وێب', url: 'https://developer.mozilla.org' },
+        ]
+    },
+    {
+        title: '🧠 زانست و ڤەکۆلین',
+        tools: [
+            { name: 'ScienceDirect', desc: 'ڤەکۆلینا زانستی', url: 'https://www.sciencedirect.com' },
+            { name: 'Nature', desc: 'گۆڤارا زانستی', url: 'https://www.nature.com' },
+            { name: 'NIH', desc: 'زانکۆیا پزیشکی', url: 'https://www.nih.gov' },
+            { name: 'arXiv', desc: 'ڤەکۆلینا زانستی و بیرکاری', url: 'https://arxiv.org' },
+            { name: 'Google Scholar', desc: 'گەڕان بۆ ڤەکۆلینان', url: 'https://scholar.google.com' },
+            { name: 'Kurdish Academy', desc: 'ئەکادیمیا کوردی', url: 'https://www.kurdishacademy.org' },
+        ]
+    },
+    {
+        title: '🎵 موزیک و دەنگ',
+        tools: [
+            { name: 'Spotify', desc: 'گۆرانی و موزیک', url: 'https://www.spotify.com' },
+            { name: 'SoundCloud', desc: 'هەڤپشککرنا موزیک', url: 'https://soundcloud.com' },
+            { name: 'Anghami', desc: 'موزیک بۆ ناڤچەیا کوردی', url: 'https://www.anghami.com' },
+            { name: 'Radio Garden', desc: 'ڕادیۆیا جیهانی', url: 'https://radio.garden' },
+            { name: 'YouTube Music', desc: 'موزیک و گۆرانی', url: 'https://music.youtube.com' },
+        ]
+    },
+    {
+        title: '🗺️ نەخشە و گەشت',
+        tools: [
+            { name: 'Google Maps', desc: 'نەخشە و رێنوێنی', url: 'https://maps.google.com' },
+            { name: 'Bing Maps', desc: 'نەخشە و رێنوێنی', url: 'https://www.bing.com/maps' },
+            { name: 'OpenStreetMap', desc: 'نەخشەیا جیهانی', url: 'https://www.openstreetmap.org' },
+            { name: 'Rome2Rio', desc: 'رێنوێنیا گەشت', url: 'https://www.rome2rio.com' },
+            { name: 'Tripadvisor', desc: 'رێنوێنیا گەشت و گەشتوگوزار', url: 'https://www.tripadvisor.com' },
+        ]
+    },
+    {
+        title: '📷 وێنە و دیزاین',
+        tools: [
+            { name: 'Canva', desc: 'دیزاینا وێنە و پۆست', url: 'https://www.canva.com' },
+            { name: 'Pixabay', desc: 'وێنەیێن بێمۆلەت', url: 'https://pixabay.com' },
+            { name: 'Unsplash', desc: 'وێنەیێن بێمۆلەت', url: 'https://unsplash.com' },
+            { name: 'Figma', desc: 'دیزاینا وێب و ئاپلیکەیشن', url: 'https://www.figma.com' },
+            { name: 'Behance', desc: 'پڕۆژە و دیزاین', url: 'https://www.behance.net' },
+        ]
+    },
+    {
+        title: '🏦 دارایی و پارە',
+        tools: [
+            { name: 'PayPal', desc: 'خزمەتگوزاری پارەدان و وەرگرتن', url: 'https://www.paypal.com' },
+            { name: 'Wise', desc: 'گواستنەوەی پارە بە نرخێکی کەم', url: 'https://wise.com' },
+            { name: 'Coinbase', desc: 'بازاڕی کرپتۆکارەنسی', url: 'https://www.coinbase.com' },
+            { name: 'Binance', desc: 'بازاڕی کرپتۆکارەنسی', url: 'https://www.binance.com' },
+            { name: 'XE', desc: 'گۆڕینی نرخە پارەکان', url: 'https://www.xe.com' },
+        ]
+    },
+    {
+        title: '🏋️ تەندروستی و وەرزش',
+        tools: [
+            { name: 'MyFitnessPal', desc: 'پێوانەکردنی خواردن و وەرزش', url: 'https://www.myfitnesspal.com' },
+            { name: 'Strava', desc: 'پێوانەکردنی ڕاگەیاندن و وەرزش', url: 'https://www.strava.com' },
+            { name: 'Nike Training Club', desc: 'فێرکاری وەرزش و ڕاهێنان', url: 'https://www.nike.com/ntc-app' },
+            { name: 'Fitbit', desc: 'پێوانەکردنی ڕەفتار و تەندروستی', url: 'https://www.fitbit.com' },
+            { name: 'Headspace', desc: 'ڕێنمایی مێدیتەیشن و ئارامگرتن', url: 'https://www.headspace.com' },
+        ]
+    },
+    {
+        title: '🎮 یاری و گێمینگ',
+        tools: [
+            { name: 'Steam', desc: 'بازاڕی یارییەکان', url: 'https://store.steampowered.com' },
+            { name: 'Epic Games', desc: 'بازاڕی یارییەکان', url: 'https://www.epicgames.com' },
+            { name: 'Twitch', desc: 'بینینی ڤیدیۆی یاری و پەخشکردن', url: 'https://www.twitch.tv' },
+            { name: 'Discord', desc: 'گفتوگۆ و کۆمەڵگەی گێمەرەکان', url: 'https://discord.com' },
+            { name: 'Itch.io', desc: 'یارییە تایبەتی و فری', url: 'https://itch.io' },
+        ]
+    },
+    {
+        title: '🛒 بازاڕ و کڕین',
+        tools: [
+            { name: 'Amazon', desc: 'بازاڕی گشتی', url: 'https://www.amazon.com' },
+            { name: 'eBay', desc: 'بازاڕی گشتی و داواکردن', url: 'https://www.ebay.com' },
+            { name: 'AliExpress', desc: 'بازاڕی جیهانی', url: 'https://www.aliexpress.com' },
+            { name: 'Etsy', desc: 'کڕینی کارە دەستکرد و تایبەتی', url: 'https://www.etsy.com' },
+            { name: 'Shopify', desc: 'دروستکردنی بازاڕی تایبەتی', url: 'https://www.shopify.com' },
+        ]
+    }
+];
+    // --- END DATA ---
+
+    // DOM Elements
+    const categoriesList = document.getElementById('categoriesList');
+    const entranceOverlay = document.getElementById('entranceOverlay');
+    const entranceBtn = document.getElementById('entranceBtn');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const categoryOverlay = document.getElementById('categoryOverlay');
+    const closeCategoryOverlay = document.getElementById('closeCategoryOverlay');
+    const overlayTitle = document.getElementById('overlayTitle');
+    const toolsList = document.getElementById('toolsList');
+
+    // Entrance overlay logic
+    entranceBtn.onclick = function(e) {
+        e.preventDefault();
+        entranceOverlay.style.display = 'none';
+    };
+
+    // Render categories
+    function renderCategories() {
+        categoriesList.innerHTML = '';
+        categories.forEach((cat, idx) => {
+            const card = document.createElement('div');
+            card.className = 'category-card';
+            card.style.setProperty('--i', idx);
+            const emoji = cat.title.split(' ')[0];
+            const titleText = cat.title.replace(/^[^\s]+\s/, '');
+            card.innerHTML = `<span class="cat-emoji">${emoji}</span><span class="cat-title">${titleText}</span>`;
+            card.tabIndex = 0;
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-label', cat.title);
+            card.onclick = () => openCategoryOverlay(cat);
+            card.onkeypress = (e) => { if (e.key === 'Enter') openCategoryOverlay(cat); };
+            categoriesList.appendChild(card);
+        });
+    }
+
+    // Open category overlay and show tools
+    function openCategoryOverlay(category) {
+        overlayTitle.textContent = category.title;
+        toolsList.innerHTML = '';
+        category.tools.forEach(tool => {
+            const toolCard = document.createElement('div');
+            toolCard.className = 'tool-card';
+            toolCard.innerHTML = `
+                <strong>${tool.name}</strong>
+                <div>${tool.desc}</div>
+                <a class="visit-btn" href="${tool.url}" target="_blank" rel="noopener">Visit Link</a>
+            `;
+            toolsList.appendChild(toolCard);
+        });
+        categoryOverlay.style.display = 'block';
+        categoryOverlay.classList.add('active');
+        // Push state for back navigation
+        history.pushState({ overlay: true }, '', '#category');
+    }
+
+    // Add: Return to categories on 'Back' (mobile return key or mouse back button)
+    function closeCategoryOverlayAndShowCategories() {
+        categoryOverlay.style.display = 'none';
+        categoryOverlay.classList.remove('active');
+        // Optionally scroll to categories
+        categoriesList.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Enhance close logic for overlay
+    closeCategoryOverlay.onclick = function() {
+        closeCategoryOverlayAndShowCategories();
+    };
+    closeCategoryOverlay.onkeypress = function(e) {
+        if (e.key === 'Enter') {
+            closeCategoryOverlayAndShowCategories();
+        }
+    };
+    // Close overlay on outside click
+    categoryOverlay.onclick = function(e) {
+        if (e.target === categoryOverlay) {
+            closeCategoryOverlayAndShowCategories();
+        }
+    };
+
+    // Listen for browser back/return (popstate) and mobile return key
+    window.addEventListener('popstate', function() {
+        if (categoryOverlay.classList.contains('active')) {
+            closeCategoryOverlayAndShowCategories();
+        }
+    });
+
+    // Scroll-to-top button logic
+    window.onscroll = function() {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            scrollTopBtn.style.display = 'block';
+        } else {
+            scrollTopBtn.style.display = 'none';
+        }
+    };
+    scrollTopBtn.onclick = function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Loading spinner logic
+    window.addEventListener('DOMContentLoaded', () => {
+        if (entranceOverlay) entranceOverlay.style.display = 'none';
+        renderCategories();
+    });
+
+    // Theme toggle
+    themeToggle.onclick = function() {
+        document.body.classList.toggle('light-theme');
+        if(document.body.classList.contains('light-theme')) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+    };
+
+    // Replace all static button and label texts with Kurdish (Badini)
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('scrollTopBtn').setAttribute('title', 'بچە سەرڤە');
+        document.getElementById('scrollTopBtn').innerHTML = '<i class="fas fa-arrow-up"></i>';
+    });
+
+    // Animation on scroll for mobile
+    let lastScrollY = 0;
+    function handleMobileScrollAnim() {
+        if (window.innerWidth <= 700) {
+            if (window.scrollY > 30) {
+                document.body.classList.add('scrolled-down');
+            } else {
+                document.body.classList.remove('scrolled-down');
+            }
+        } else {
+            document.body.classList.remove('scrolled-down');
+        }
+    }
+    window.addEventListener('scroll', handleMobileScrollAnim);
+    window.addEventListener('resize', handleMobileScrollAnim);
+    </script>
 </body>
 </html>
