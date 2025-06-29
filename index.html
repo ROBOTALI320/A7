@@ -190,6 +190,142 @@
         0% { opacity: 0.13; transform: translate(-50%, 0) scale(1);}
         100% { opacity: 0.28; transform: translate(-50%, 0) scale(1.18);}
     }
+    /* Fullscreen overlay for category tools */
+    .category-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        background: rgba(10, 15, 30, 0.92);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+        transition: opacity 0.3s;
+    }
+    .category-overlay.active {
+        display: flex;
+        opacity: 1;
+    }
+    .overlay-content {
+        width: 98vw;
+        max-width: 700px;
+        margin: 2.5rem auto;
+        padding: 2rem 1rem 2rem 1rem;
+        border-radius: 32px;
+        background: rgba(20, 30, 40, 0.55);
+        box-shadow: 0 8px 48px 0 #00cfff33, 0 2px 12px 0 #00ff8833;
+        position: relative;
+        z-index: 1001;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 70vh;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    .close-overlay {
+        position: absolute;
+        top: 18px;
+        right: 28px;
+        font-size: 2.2rem;
+        color: #00cfff;
+        cursor: pointer;
+        z-index: 1002;
+        transition: color 0.2s;
+    }
+    .close-overlay:hover, .close-overlay:focus {
+        color: #ff5efc;
+    }
+    #overlayTitle {
+        color: #fff;
+        font-size: 2rem;
+        font-family: 'Orbitron', Arial, sans-serif;
+        margin-bottom: 1.2rem;
+        text-align: center;
+        text-shadow: 0 2px 16px #00ff8899;
+    }
+    #toolsList {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .tool-card {
+        width: 95%;
+        max-width: 520px;
+        margin: 0 auto;
+        background: rgba(30, 40, 60, 0.38);
+        border-radius: 18px;
+        border: 2px solid rgba(0,255,136,0.18);
+        box-shadow: 0 4px 24px 0 rgba(0,255,136,0.10), 0 1.5px 8px 0 rgba(0,207,255,0.10);
+        backdrop-filter: blur(12px) saturate(1.1);
+        -webkit-backdrop-filter: blur(12px) saturate(1.1);
+        padding: 1.1rem 1.2rem 1.1rem 1.2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        color: #fff;
+        transition: box-shadow 0.2s, border 0.2s, background 0.2s;
+        opacity: 0.98;
+    }
+    .tool-card strong {
+        font-size: 1.18rem;
+        color: #00ff88;
+        font-family: 'Orbitron', Arial, sans-serif;
+        letter-spacing: 1px;
+    }
+    .tool-card div {
+        font-size: 1rem;
+        color: #fff;
+        opacity: 0.88;
+        margin-bottom: 0.3rem;
+    }
+    .visit-btn {
+        display: inline-block;
+        margin-top: 0.2rem;
+        padding: 0.45rem 1.2rem;
+        background: linear-gradient(90deg, #00ff88 0%, #00cfff 100%);
+        color: #181c24;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        text-decoration: none;
+        box-shadow: 0 2px 12px #00ff8855;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+    }
+    .visit-btn:hover, .visit-btn:focus {
+        background: linear-gradient(90deg, #ff5efc 0%, #00cfff 100%);
+        color: #fff;
+        box-shadow: 0 2px 18px #ff5efc88;
+        outline: none;
+    }
+
+    /* Responsive overlay for mobile */
+    @media (max-width: 700px) {
+        .overlay-content {
+            width: 99vw;
+            max-width: 99vw;
+            min-height: 90vh;
+            padding: 1.2rem 0.2rem 2rem 0.2rem;
+            border-radius: 0 0 24px 24px;
+        }
+        .tool-card {
+            width: 98vw;
+            max-width: 98vw;
+            padding: 1rem 0.7rem 1rem 0.7rem;
+        }
+        .close-overlay {
+            top: 10px;
+            right: 16px;
+            font-size: 2rem;
+        }
+    }
     /* ...existing code... */
     </style>
 </head>
@@ -670,7 +806,7 @@
             `;
             toolsList.appendChild(toolCard);
         });
-        categoryOverlay.style.display = 'block';
+        categoryOverlay.style.display = 'flex';
         categoryOverlay.classList.add('active');
         // Push state for back navigation
         history.pushState({ overlay: true }, '', '#category');
